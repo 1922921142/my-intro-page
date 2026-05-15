@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Olivia qiang | 从混乱到清晰</title>
+    <meta
+      name="description"
+      content="一个关于长期主义、现实决策与人生复利的个人品牌主页。"
+    />
+    <meta property="og:title" content="Olivia qiang | 从混乱到清晰" />
+    <meta
+      property="og:description"
+      content="我关心如何在复杂现实里做长期有复利的选择。"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f5f7f0" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true">O</span>
+        <span>Olivia qiang</span>
+      </a>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#beliefs">观点</a>
+        <a href="#method">方法</a>
+        <a href="#practice">实践</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Personal map / long-term thinking</p>
+          <h1 id="hero-title">我研究如何把现实决策的混乱，变成长期有复利的清晰。</h1>
+          <p class="hero-lede">
+            我不是追求每一步都正确的人。我更在意：一个选择能不能在时间里沉淀成能力、关系、认知和机会。
+          </p>
+          <div class="hero-actions" aria-label="主要操作">
+            <a class="button primary" href="#beliefs">进入我的思考地图</a>
+            <a class="button secondary" href="#contact">留一个问题给我</a>
+          </div>
+        </div>
+
+        <div class="route-stage" aria-label="从混乱到清晰的路线图">
+          <svg class="route-map" viewBox="0 0 760 560" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">从混乱到清晰的路线图</title>
+            <desc id="map-desc">路线从现实噪声出发，经过选择、时间尺度和复利，抵达清晰。</desc>
+            <defs>
+              <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#10231c" flood-opacity="0.15" />
+              </filter>
+              <linearGradient id="route-gradient" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#e5553f" />
+                <stop offset="48%" stop-color="#d4a019" />
+                <stop offset="100%" stop-color="#1c9077" />
+              </linearGradient>
+              <pattern id="map-grid" width="36" height="36" patternUnits="userSpaceOnUse">
+                <path d="M36 0H0V36" fill="none" stroke="#d9ded5" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect x="26" y="22" width="708" height="516" rx="26" fill="#fbfcf7" filter="url(#soft-shadow)" />
+            <rect x="26" y="22" width="708" height="516" rx="26" fill="url(#map-grid)" opacity="0.7" />
+            <path
+              class="route-line"
+              d="M105 406 C 178 300, 246 484, 326 344 S 456 152, 544 255 S 645 327, 674 164"
+              fill="none"
+              stroke="url(#route-gradient)"
+              stroke-width="10"
+              stroke-linecap="round"
+            />
+            <path
+              d="M102 407 C 179 298, 245 485, 326 345 S 457 151, 545 256 S 644 326, 675 164"
+              fill="none"
+              stroke="#13231f"
+              stroke-width="1"
+              stroke-dasharray="8 12"
+              opacity="0.45"
+            />
+            <g class="map-zone zone-noise">
+              <circle cx="105" cy="406" r="54" fill="#fff1ed" />
+              <text x="105" y="397" text-anchor="middle">现实噪声</text>
+              <text x="105" y="421" text-anchor="middle">太多选择</text>
+            </g>
+            <g class="map-zone zone-choice">
+              <circle cx="326" cy="344" r="49" fill="#fff7da" />
+              <text x="326" y="336" text-anchor="middle">选择</text>
+              <text x="326" y="360" text-anchor="middle">看见代价</text>
+            </g>
+            <g class="map-zone zone-time">
+              <circle cx="478" cy="185" r="56" fill="#edf7ff" />
+              <text x="478" y="176" text-anchor="middle">时间尺度</text>
+              <text x="478" y="200" text-anchor="middle">拉长判断</text>
+            </g>
+            <g class="map-zone zone-compound">
+              <circle cx="594" cy="282" r="50" fill="#edf8ef" />
+              <text x="594" y="274" text-anchor="middle">复利</text>
+              <text x="594" y="298" text-anchor="middle">持续积累</text>
+            </g>
+            <g class="map-zone zone-clear">
+              <circle cx="674" cy="164" r="54" fill="#eaf8f4" />
+              <text x="674" y="155" text-anchor="middle">清晰</text>
+              <text x="674" y="179" text-anchor="middle">可持续方向</text>
+            </g>
+          </svg>
+
+          <div class="map-controls" aria-label="路线节点">
+            <button class="map-pin is-active" type="button" data-step="noise">混乱</button>
+            <button class="map-pin" type="button" data-step="choice">选择</button>
+            <button class="map-pin" type="button" data-step="time">长期</button>
+            <button class="map-pin" type="button" data-step="compound">复利</button>
+            <button class="map-pin" type="button" data-step="clear">清晰</button>
+          </div>
+          <p class="map-note" data-map-note>
+            混乱不是敌人，它只是还没有被命名的现实。第一步是承认它足够复杂。
+          </p>
+        </div>
+      </section>
+
+      <section class="intro-band" aria-label="页面引导">
+        <p>这里不是一份简历，而是一张思考地图。它记录我如何理解成长、选择和长期积累。</p>
+      </section>
+
+      <section class="section" id="beliefs" aria-labelledby="beliefs-title">
+        <div class="section-heading">
+          <p class="eyebrow">Beliefs</p>
+          <h2 id="beliefs-title">我相信的几件事</h2>
+        </div>
+        <div class="belief-grid">
+          <article class="belief-card">
+            <span class="card-index">01</span>
+            <h3>清晰不是天赋，是整理过的混乱。</h3>
+            <p>很多决定一开始都不干净。重要的是把问题放到桌面上，承认约束，区分事实、情绪和想象。</p>
+          </article>
+          <article class="belief-card">
+            <span class="card-index">02</span>
+            <h3>短期正确不等于长期值得。</h3>
+            <p>我会问一个选择在三年后还会不会产生回报：它是否增加能力、认知、信任，或者打开新的可能性。</p>
+          </article>
+          <article class="belief-card">
+            <span class="card-index">03</span>
+            <h3>人生复利来自可重复的好判断。</h3>
+            <p>真正有价值的不是一次灵感，而是能不断校准、复盘、迁移到下一个问题里的判断系统。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split-section" id="method" aria-labelledby="method-title">
+        <div class="section-heading sticky-heading">
+          <p class="eyebrow">Method</p>
+          <h2 id="method-title">我的长期主义，不是忍耐，而是计算时间的力量。</h2>
+          <p>
+            我会把现实决策放进更长的时间轴里：看它会消耗什么、积累什么、塑造什么样的自己。
+          </p>
+        </div>
+        <div class="method-list">
+          <article class="method-item">
+            <span>观察</span>
+            <h3>先把问题从情绪里拿出来。</h3>
+            <p>我会记录触发点、真实约束和可选路径，让模糊焦虑变成可以讨论的材料。</p>
+          </article>
+          <article class="method-item">
+            <span>拉长</span>
+            <h3>用时间尺度重新排序选择。</h3>
+            <p>眼前更轻松的事，长期可能更贵；眼前更慢的事，长期可能更便宜。</p>
+          </article>
+          <article class="method-item">
+            <span>积累</span>
+            <h3>优先选择能复利的变量。</h3>
+            <p>能力、作品、关系、表达、身体、认知，这些会在未来互相加成。</p>
+          </article>
+          <article class="method-item">
+            <span>复盘</span>
+            <h3>让每个决定成为下一次判断的训练数据。</h3>
+            <p>我关心结果，也关心过程里暴露出的偏见、盲区和真实偏好。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section practice-section" id="practice" aria-labelledby="practice-title">
+        <div class="section-heading">
+          <p class="eyebrow">Practice</p>
+          <h2 id="practice-title">我正在实践的事</h2>
+        </div>
+        <div class="practice-layout">
+          <article>
+            <h3>写作</h3>
+            <p>把经验写成可以被复用的认知工具，而不是只停留在感受里。</p>
+          </article>
+          <article>
+            <h3>学习</h3>
+            <p>建立自己的知识地图，持续把输入压缩成结构、问题和行动。</p>
+          </article>
+          <article>
+            <h3>决策</h3>
+            <p>把重要选择当成长期实验，记录假设、代价、反馈和修正。</p>
+          </article>
+          <article>
+            <h3>连接</h3>
+            <p>寻找同样关心成长、认知与长期价值的人，交换问题而不只是交换答案。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">如果你也在整理自己的混乱，我们可以聊聊。</h2>
+          <p>
+            如果你是从微信看到这里，直接把一个正在困扰你的长期问题发给我就好。
+            比起寒暄，我更喜欢从一个真实问题开始认识一个人。
+          </p>
+        </div>
+        <p class="contact-note">联系方式暂不公开，先把对话留在真实关系里。</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Olivia qiang. Built as a personal thinking map.</p>
+      <a href="#top">回到顶部</a>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
