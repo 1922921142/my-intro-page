@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浜虹敓绠＄悊绯荤粺</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --blue: #0071e3;
+      --green: #34c759;
+      --orange: #ff9500;
+      --pink: #ff375f;
+      --purple: #af52de;
+      --cyan: #5ac8fa;
+      --indigo: #5856d6;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --line: #e5e5ea;
+      --bg: #f5f5f7;
+      --card: rgba(255,255,255,.92);
+      --shadow: 0 12px 35px rgba(0,0,0,.07);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 0%, rgba(90,200,250,.16), transparent 27rem),
+        radial-gradient(circle at 25% 100%, rgba(175,82,222,.09), transparent 30rem),
+        var(--bg);
+      min-height: 100vh;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .app { min-height: 100vh; }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 220px;
+      padding: 24px 15px 18px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255,255,255,.8);
+      z-index: 30;
+    }
+    .brand {
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      padding: 4px 10px 22px;
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: -.4px;
+    }
+    .brand-mark {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--blue), var(--indigo));
+      color: white;
+      box-shadow: 0 8px 18px rgba(0,113,227,.25);
+    }
+    .nav { display: grid; gap: 6px; }
+    .nav-btn, .analysis-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #48484a;
+      border-radius: 12px;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-align: left;
+      transition: .2s;
+      font-size: 14px;
+    }
+    .nav-btn:hover { background: rgba(0,113,227,.07); color: var(--blue); }
+    .nav-btn.active {
+      background: var(--blue);
+      color: white;
+      box-shadow: 0 7px 18px rgba(0,113,227,.2);
+    }
+    .nav-icon { width: 24px; text-align: center; font-size: 17px; }
+    .sidebar-bottom { margin-top: auto; display: grid; gap: 9px; }
+    .analysis-btn {
+      background: linear-gradient(135deg, #f4eaff, #eaf2ff);
+      color: var(--indigo);
+      font-weight: 650;
+    }
+    .backup-row { display: flex; gap: 7px; }
+    .backup-row button {
+      flex: 1; border: 0; border-radius: 10px; padding: 9px 5px;
+      background: #f2f2f7; color: #555; font-size: 12px;
+    }
+    .storage-note { color: #999; font-size: 10px; text-align: center; }
+    main { margin-left: 220px; padding: 30px clamp(22px, 4vw, 56px) 90px; min-height: 100vh; }
+    .module { display: none; animation: enter .28s ease; max-width: 1180px; margin: 0 auto; }
+    .module.active { display: block; }
+    @keyframes enter { from { opacity: 0; transform: translateY(6px); } }
+    .page-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 18px; margin: 1px 0 24px;
+    }
+    .eyebrow { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+    h1 { margin: 5px 0 4px; font-size: clamp(28px, 3vw, 38px); letter-spacing: -1.3px; }
+    .subtitle { margin: 0; color: var(--muted); font-size: 14px; }
+    .date-chip {
+      white-space: nowrap; color: var(--muted); background: rgba(255,255,255,.75);
+      border: 1px solid white; padding: 9px 13px; border-radius: 99px; font-size: 13px;
+    }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .card-title {
+      margin: 0 0 16px; font-size: 16px; display: flex;
+      justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .stat {
+      position: relative; overflow: hidden; padding: 17px;
+      border-radius: 15px; background: rgba(255,255,255,.88); box-shadow: 0 7px 24px rgba(0,0,0,.05);
+    }
+    .stat::after {
+      content: ""; position: absolute; width: 65px; height: 65px;
+      border-radius: 50%; background: var(--accent, var(--blue)); opacity: .09; right: -18px; top: -20px;
+    }
+    .stat-label { color: var(--muted); font-size: 12px; }
+    .stat-value { display: block; margin-top: 7px; font-weight: 760; font-size: 25px; letter-spacing: -.7px; }
+    .stat small { color: var(--muted); margin-left: 4px; font-weight: 500; font-size: 11px; }
+    .form-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .form-row.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-row.cols-3 { grid-template-columns: 1.3fr .8fr .8fr; }
+    input, select, textarea {
+      width: 100%; border: 1px solid var(--line); background: #fafafa; color: var(--ink);
+      border-radius: 11px; padding: 11px 12px; outline: none; transition: .2s;
+    }
+    textarea { resize: vertical; min-height: 95px; line-height: 1.65; }
+    input:focus, select:focus, textarea:focus { border-color: rgba(0,113,227,.5); box-shadow: 0 0 0 4px rgba(0,113,227,.08); background: white; }
+    .primary, .soft-btn, .danger-btn {
+      border: 0; border-radius: 11px; padding: 11px 15px; font-weight: 650; transition: .2s;
+    }
+    .primary { color: white; background: var(--blue); box-shadow: 0 7px 16px rgba(0,113,227,.18); }
+    .primary:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    .soft-btn { background: #edf5ff; color: var(--blue); }
+    .danger-btn { background: #fff0f2; color: var(--pink); }
+    .full { width: 100%; }
+    .list { display: grid; gap: 9px; }
+    .empty {
+      padding: 32px 12px; text-align: center; color: #a1a1a6;
+      border: 1px dashed #d2d2d7; border-radius: 13px; font-size: 13px;
+    }
+    .empty-icon { font-size: 28px; display: block; margin-bottom: 6px; filter: grayscale(.2); }
+    .list-item {
+      display: flex; align-items: center; gap: 11px; padding: 12px 13px;
+      background: #f8f8fa; border-radius: 12px; min-width: 0;
+    }
+    .item-main { flex: 1; min-width: 0; }
+    .item-title { font-size: 14px; overflow-wrap: anywhere; }
+    .item-meta { color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .delete {
+      border: 0; background: transparent; color: #b0b0b5; padding: 5px 7px; font-size: 16px; border-radius: 8px;
+    }
+    .delete:hover { color: var(--pink); background: #fff0f2; }
+    .check {
+      appearance: none; width: 21px; height: 21px; min-width: 21px; padding: 0;
+      border: 2px solid #c7c7cc; border-radius: 7px; background: white; display: grid; place-content: center;
+    }
+    .check::after { content: "鉁?; color: white; font-size: 13px; transform: scale(0); transition: .15s; }
+    .check:checked { border-color: var(--green); background: var(--green); }
+    .check:checked::after { transform: scale(1); }
+    .done .item-title { text-decoration: line-through; color: #a1a1a6; }
+    .priority { padding: 3px 7px; border-radius: 99px; font-size: 10px; font-weight: 650; }
+    .priority.high { color: #d82447; background: #ffe8ee; }
+    .priority.medium { color: #c86e00; background: #fff1dc; }
+    .priority.low { color: #147d2b; background: #e8f9ec; }
+    .progress-track { height: 10px; background: #ececf0; overflow: hidden; border-radius: 99px; }
+    .progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .35s; }
+    .ring {
+      width: 130px; height: 130px; border-radius: 50%; margin: 8px auto 14px;
+      background: conic-gradient(var(--green) calc(var(--pct) * 1%), #ececf0 0);
+      display: grid; place-items: center;
+    }
+    .ring::before { content: ""; width: 98px; height: 98px; border-radius: 50%; background: white; }
+    .ring-text { position: absolute; text-align: center; font-weight: 750; font-size: 23px; }
+    .ring-text small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; font-weight: 500; }
+    .center { text-align: center; }
+    .chart-wrap { position: relative; height: 270px; }
+    .type-switch {
+      display: flex; padding: 3px; background: #efeff4; border-radius: 10px; margin-bottom: 12px;
+    }
+    .type-switch label { flex: 1; cursor: pointer; }
+    .type-switch input { display: none; }
+    .type-switch span { display: block; text-align: center; padding: 8px; border-radius: 8px; color: var(--muted); font-size: 13px; }
+    .type-switch input:checked + span { background: white; color: var(--blue); font-weight: 650; box-shadow: 0 2px 7px rgba(0,0,0,.06); }
+    .sport-grid, .mood-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px;
+    }
+    .sport-choice input, .mood-choice input { display: none; }
+    .sport-choice span, .mood-choice span {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px; min-height: 61px; border-radius: 11px; background: #f6f6f8;
+      border: 1px solid transparent; color: #5f5f65; font-size: 11px; transition: .18s;
+    }
+    .sport-choice input:checked + span, .mood-choice input:checked + span {
+      color: var(--blue); border-color: rgba(0,113,227,.28); background: #eef6ff; transform: translateY(-1px);
+    }
+    .sport-choice b { font-size: 20px; font-weight: 400; }
+    .mood-grid { grid-template-columns: repeat(6, 1fr); }
+    .mood-choice span { min-height: 55px; font-size: 25px; }
+    .heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
+    .heat-day { text-align: center; }
+    .heat-square {
+      aspect-ratio: 1; max-height: 58px; border-radius: 11px; display: grid; place-items: center;
+      background: #edf0f2; color: #888; font-size: 11px; transition: .2s;
+    }
+    .heat-square.l1 { background: #ccf2d4; color: #248438; }
+    .heat-square.l2 { background: #83de95; color: #116424; }
+    .heat-square.l3 { background: var(--green); color: white; }
+    .heat-label { font-size: 10px; color: var(--muted); margin-top: 6px; }
+    .book-card, .trip-card {
+      background: white; border: 1px solid #ededf0; border-radius: 14px; padding: 16px;
+      box-shadow: 0 5px 16px rgba(0,0,0,.035);
+    }
+    .book-head, .trip-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .book-title, .trip-title { font-weight: 720; }
+    .book-author, .trip-date { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .progress-row { display: flex; gap: 10px; align-items: center; margin: 10px 0; }
+    .progress-row .progress-track { flex: 1; }
+    .progress-row strong { font-size: 12px; color: var(--blue); min-width: 35px; text-align: right; }
+    .inline-controls { display: flex; gap: 7px; margin-top: 10px; }
+    .inline-controls input { padding: 8px 10px; }
+    .inline-controls button { padding: 8px 11px; }
+    .notes { margin-top: 11px; display: grid; gap: 7px; }
+    .note { background: #fff9e8; border-radius: 9px; padding: 9px 10px; font-size: 12px; line-height: 1.5; }
+    .trip-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mini-title { font-size: 12px; font-weight: 700; margin: 5px 0 8px; color: #555; }
+    .mini-item { display: flex; gap: 7px; align-items: center; font-size: 12px; padding: 7px 0; border-bottom: 1px solid #f0f0f2; }
+    .mini-item:last-child { border-bottom: 0; }
+    .word-area { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .word-card { height: 145px; perspective: 900px; cursor: pointer; }
+    .word-inner { position: relative; width: 100%; height: 100%; transition: transform .55s; transform-style: preserve-3d; }
+    .word-card.flipped .word-inner { transform: rotateY(180deg); }
+    .word-face {
+      position: absolute; inset: 0; backface-visibility: hidden; border-radius: 14px;
+      padding: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: linear-gradient(145deg, white, #f3f7ff); border: 1px solid #e5ecfa; box-shadow: 0 5px 17px rgba(0,0,0,.04);
+    }
+    .word-face.back { transform: rotateY(180deg); background: linear-gradient(145deg, #eef9ff, #f7f1ff); }
+    .word-en { font-size: 21px; font-weight: 750; }
+    .word-ph { color: var(--muted); font-size: 12px; margin-top: 6px; }
+    .word-cn { font-size: 17px; font-weight: 650; text-align: center; }
+    .word-actions { position: absolute; right: 8px; top: 7px; z-index: 3; }
+    .word-hint { position: absolute; bottom: 8px; color: #aaa; font-size: 9px; }
+    .goal-row { display: flex; align-items: center; gap: 12px; }
+    .goal-row input { width: 90px; }
+    .goal-progress { flex: 1; }
+    .ai-fab {
+      position: fixed; right: 25px; bottom: 24px; width: 58px; height: 58px;
+      border: 0; border-radius: 20px; color: white; font-size: 25px;
+      background: linear-gradient(135deg, var(--indigo), var(--purple));
+      box-shadow: 0 13px 30px rgba(88,86,214,.35); z-index: 50; transition: .22s;
+    }
+    .ai-fab:hover { transform: translateY(-3px) scale(1.03); }
+    .ai-panel {
+      position: fixed; right: 25px; bottom: 92px; width: min(380px, calc(100vw - 28px));
+      background: rgba(255,255,255,.96); backdrop-filter: blur(22px); border: 1px solid white;
+      border-radius: 20px; box-shadow: 0 20px 55px rgba(0,0,0,.18); z-index: 49;
+      overflow: hidden; transform: translateY(15px) scale(.96); opacity: 0; pointer-events: none; transition: .24s;
+    }
+    .ai-panel.open { transform: none; opacity: 1; pointer-events: auto; }
+    .ai-head { padding: 15px 17px; color: white; background: linear-gradient(135deg, var(--indigo), var(--purple)); display: flex; justify-content: space-between; }
+    .ai-head b { font-size: 14px; }
+    .ai-head small { opacity: .78; display: block; margin-top: 2px; }
+    .ai-close { border: 0; background: rgba(255,255,255,.16); color: white; width: 27px; height: 27px; border-radius: 8px; }
+    .ai-messages { height: 220px; overflow: auto; padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+    .bubble { max-width: 88%; padding: 9px 11px; border-radius: 12px; font-size: 12px; line-height: 1.5; }
+    .bubble.bot { background: #f1f1f5; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .bubble.user { color: white; background: var(--blue); align-self: flex-end; border-bottom-right-radius: 4px; }
+    .ai-examples { padding: 0 14px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .ai-examples button { border: 0; background: #f2efff; color: var(--indigo); border-radius: 99px; padding: 5px 8px; font-size: 10px; }
+    .ai-input { border-top: 1px solid var(--line); padding: 11px; display: flex; gap: 8px; }
+    .ai-input input { padding: 10px; }
+    .ai-input button { border: 0; background: var(--indigo); color: white; border-radius: 10px; padding: 0 14px; }
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.28); backdrop-filter: blur(5px);
+      z-index: 100; display: none; place-items: center; padding: 20px;
+    }
+    .modal.open { display: grid; }
+    .modal-card {
+      width: min(850px, 100%); max-height: 88vh; overflow: auto; background: #f7f7f9;
+      border-radius: 22px; padding: 24px; box-shadow: 0 25px 70px rgba(0,0,0,.2);
+    }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .modal-head h2 { margin: 0; font-size: 22px; }
+    .close-modal { border: 0; background: #e9e9ed; width: 32px; height: 32px; border-radius: 50%; color: #777; }
+    .analysis-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .analysis-item { background: white; border-radius: 13px; padding: 13px; }
+    .analysis-item b { display: block; font-size: 13px; margin: 5px 0; }
+    .analysis-item span { color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .insights { margin-top: 14px; background: linear-gradient(135deg, #eef4ff, #f8efff); border-radius: 15px; padding: 16px; }
+    .insights h3 { margin: 0 0 9px; font-size: 14px; color: var(--indigo); }
+    .insights ul { margin: 0; padding-left: 19px; font-size: 12px; line-height: 1.8; color: #505056; }
+    .toast {
+      position: fixed; left: calc(50% + 110px); bottom: 25px; transform: translate(-50%, 25px);
+      background: rgba(29,29,31,.92); color: white; padding: 10px 15px; border-radius: 99px;
+      font-size: 12px; opacity: 0; pointer-events: none; transition: .25s; z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .mobile-top { display: none; }
+    @media (max-width: 900px) {
+      .sidebar { width: 82px; padding-inline: 10px; }
+      .brand { justify-content: center; padding-inline: 0; }
+      .brand-text, .nav-text, .sidebar-bottom { display: none; }
+      .nav-btn { justify-content: center; padding: 11px 5px; }
+      .nav-icon { width: auto; }
+      main { margin-left: 82px; padding-inline: 22px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .toast { left: calc(50% + 41px); }
+    }
+    @media (max-width: 650px) {
+      .sidebar {
+        inset: auto 0 0 0; width: 100%; height: 69px; padding: 7px 8px;
+        border-right: 0; border-top: 1px solid var(--line);
+      }
+      .brand { display: none; }
+      .nav { grid-template-columns: repeat(7, 1fr); gap: 1px; }
+      .nav-btn { flex-direction: column; gap: 1px; padding: 5px 1px; font-size: 9px; }
+      .nav-btn.active { box-shadow: none; }
+      .nav-text { display: block; font-size: 8px; }
+      .nav-icon { font-size: 15px; }
+      main { margin: 0; padding: 20px 14px 100px; }
+      .page-head { align-items: flex-start; }
+      .date-chip { display: none; }
+      h1 { font-size: 28px; }
+      .stats, .grid-3 { grid-template-columns: 1fr; }
+      .stat { display: flex; justify-content: space-between; align-items: center; }
+      .stat-value { margin: 0; font-size: 21px; }
+      .form-row.cols-2, .form-row.cols-3, .trip-panels { grid-template-columns: 1fr; }
+      .word-area { grid-template-columns: repeat(2, 1fr); }
+      .analysis-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-fab { right: 14px; bottom: 82px; }
+      .ai-panel { right: 14px; bottom: 149px; }
+      .toast { left: 50%; bottom: 83px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">鈼?/span><span class="brand-text">浜虹敓绠＄悊绯荤粺</span></div>
+      <nav class="nav">
+        <button class="nav-btn active" data-target="daily"><span class="nav-icon">鉁?/span><span class="nav-text">姣忔棩璁″垝</span></button>
+        <button class="nav-btn" data-target="finance"><span class="nav-icon">楼</span><span class="nav-text">璁拌处鏈?/span></button>
+        <button class="nav-btn" data-target="fitness"><span class="nav-icon">鈼?/span><span class="nav-text">杩愬姩鎵撳崱</span></button>
+        <button class="nav-btn" data-target="mood"><span class="nav-icon">鈽?/span><span class="nav-text">蹇冩儏鏃ヨ</span></button>
+        <button class="nav-btn" data-target="reading"><span class="nav-icon">鈻?/span><span class="nav-text">璇讳功鏀惰幏</span></button>
+        <button class="nav-btn" data-target="travel"><span class="nav-icon">鉁?/span><span class="nav-text">鏃呰璁″垝</span></button>
+        <button class="nav-btn" data-target="english"><span class="nav-icon">A</span><span class="nav-text">鑻辫瀛︿範</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="analysis-btn" id="analysisBtn"><span class="nav-icon">鉁?/span><span>鍛ㄥ害鏁版嵁鍒嗘瀽</span></button>
+        <div class="backup-row">
+          <button id="exportBtn">瀵煎嚭澶囦唤</button>
+          <button id="importBtn">瀵煎叆鏁版嵁</button>
+        </div>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <div class="storage-note">鏁版嵁浠呬繚瀛樺湪姝ゆ祻瑙堝櫒</div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="module active" id="daily">
+        <div class="page-head">
+          <div><div class="eyebrow">FOCUS TODAY</div><h1>姣忔棩璁″垝</h1><p class="subtitle">鎶婇噸瑕佺殑浜嬫儏锛屾斁杩涙竻鏅扮殑涓€澶┿€?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">浠婃棩寰呭姙 <span id="todoCount" class="item-meta"></span></h2>
+            <form id="todoForm" class="form-row cols-3">
+              <input id="todoText" required maxlength="80" placeholder="浠婂ぉ鎯冲畬鎴愪粈涔堬紵">
+              <select id="todoPriority"><option value="high">楂樹紭鍏堢骇</option><option value="medium" selected>涓紭鍏堢骇</option><option value="low">浣庝紭鍏堢骇</option></select>
+              <button class="primary" type="submit">娣诲姞寰呭姙</button>
+            </form>
+            <div id="todoList" class="list" style="margin-top:16px"></div>
+          </div>
+          <div class="card center">
+            <h2 class="card-title">浠婃棩瀹屾垚鐜?/h2>
+            <div class="ring" id="todoRing" style="--pct:0"><div class="ring-text"><span id="todoRate">0%</span><small>宸插畬鎴?/small></div></div>
+            <p class="subtitle" id="todoEncourage">浠庣涓€浠跺皬浜嬪紑濮嬨€?/p>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="finance">
+        <div class="page-head">
+          <div><div class="eyebrow">MONEY FLOW</div><h1>璁拌处鏈?/h1><p class="subtitle">浜嗚В姣忎竴绗旈挶鐨勫幓鍚戯紝涔熺湅瑙佺Н绱€?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="stats">
+          <div class="stat" style="--accent:var(--green)"><span class="stat-label">鏈湀鏀跺叆</span><span class="stat-value" id="monthIncome">楼0.00</span></div>
+          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">鏈湀鏀嚭</span><span class="stat-value" id="monthExpense">楼0.00</span></div>
+          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">鏈湀缁撲綑</span><span class="stat-value" id="monthBalance">楼0.00</span></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">璁板綍涓€绗?/h2>
+            <form id="financeForm" class="form-row">
+              <div class="type-switch">
+                <label><input type="radio" name="moneyType" value="expense" checked><span>鏀嚭</span></label>
+                <label><input type="radio" name="moneyType" value="income"><span>鏀跺叆</span></label>
+              </div>
+              <div class="form-row cols-2">
+                <input id="moneyAmount" type="number" min="0.01" step="0.01" required placeholder="閲戦">
+                <select id="moneyCategory"></select>
+              </div>
+              <div class="form-row cols-2">
+                <input id="moneyNote" maxlength="40" placeholder="澶囨敞锛堝彲閫夛級">
+                <input id="moneyDate" type="date" required>
+              </div>
+              <button class="primary full" type="submit">淇濆瓨璁板綍</button>
+            </form>
+            <h2 class="card-title" style="margin-top:22px">鏈€杩戣褰?/h2>
+            <div id="moneyList" class="list"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鏈湀鏀嚭鍒嗙被</h2>
+            <div class="chart-wrap"><canvas id="expenseChart"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="fitness">
+        <div class="page-head">
+          <div><div class="eyebrow">KEEP MOVING</div><h1>杩愬姩鎵撳崱</h1><p class="subtitle">姣忎竴娆℃祦姹楋紝閮藉湪涓烘湭鏉ョ殑鑷繁钃勫姏銆?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="stats">
+          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">杩炵画鎵撳崱</span><span class="stat-value"><span id="streakDays">0</span><small>澶?/small></span></div>
+          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">鏈懆鏃堕暱</span><span class="stat-value"><span id="weekMinutes">0</span><small>鍒嗛挓</small></span></div>
+          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">鏈懆娑堣€?/span><span class="stat-value"><span id="weekCalories">0</span><small>鍗冨崱</small></span></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">瀹屾垚涓€娆¤繍鍔?/h2>
+            <form id="fitnessForm" class="form-row">
+              <div id="sportChoices" class="sport-grid"></div>
+              <div class="form-row cols-2">
+                <input id="sportDuration" type="number" min="1" required placeholder="鏃堕暱锛堝垎閽燂級">
+                <input id="sportCalories" type="number" min="0" required placeholder="娑堣€楋紙鍗冨崱锛?>
+              </div>
+              <input id="sportDate" type="date" required>
+              <button class="primary full" type="submit" style="background:var(--orange)">瀹屾垚鎵撳崱</button>
+            </form>
+            <h2 class="card-title" style="margin-top:22px">鏈€杩戞墦鍗?/h2>
+            <div id="fitnessList" class="list"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鏈懆娲诲姏鍦板浘</h2>
+            <div id="heatmap" class="heatmap"></div>
+            <p class="subtitle center" style="margin-top:20px">棰滆壊瓒婃繁锛岃繍鍔ㄦ椂闂磋秺闀?/p>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="mood">
+        <div class="page-head">
+          <div><div class="eyebrow">INNER WEATHER</div><h1>蹇冩儏鏃ヨ</h1><p class="subtitle">鍏佽鑷繁鎰熷彈锛屼篃缁欐儏缁竴涓嚭鍙ｃ€?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">璁板綍姝ゅ埢</h2>
+            <form id="moodForm" class="form-row">
+              <div id="moodChoices" class="mood-grid"></div>
+              <textarea id="moodText" maxlength="500" placeholder="浠婂ぉ鍙戠敓浜嗕粈涔堬紵鍐欎笅姝ゅ埢鐨勬劅鍙椻€?></textarea>
+              <input id="moodDate" type="date" required>
+              <button class="primary full" type="submit" style="background:var(--pink)">淇濆瓨鏃ヨ</button>
+            </form>
+            <h2 class="card-title" style="margin-top:22px">鏃ヨ鐗囨</h2>
+            <div id="moodList" class="list"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鏈懆蹇冩儏瓒嬪娍</h2>
+            <div class="chart-wrap"><canvas id="moodChart"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="reading">
+        <div class="page-head">
+          <div><div class="eyebrow">READ & GROW</div><h1>璇讳功鏀惰幏</h1><p class="subtitle">涓嶅彧璇诲畬涓€鏈功锛屾洿鐣欎笅鐪熸鐨勬€濊€冦€?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">娣诲姞涔︾睄</h2>
+            <form id="bookForm" class="form-row">
+              <input id="bookTitle" required maxlength="60" placeholder="涔﹀悕">
+              <div class="form-row cols-2">
+                <input id="bookAuthor" required maxlength="40" placeholder="浣滆€?>
+                <input id="bookPages" type="number" min="1" required placeholder="鎬婚〉鏁?>
+              </div>
+              <button class="primary full" type="submit" style="background:var(--purple)">鍔犲叆涔︽灦</button>
+            </form>
+            <div class="stats" style="margin:22px 0 0;grid-template-columns:repeat(2,1fr)">
+              <div class="stat" style="--accent:var(--purple)"><span class="stat-label">涔︽灦钘忎功</span><span class="stat-value"><span id="bookCount">0</span><small>鏈?/small></span></div>
+              <div class="stat" style="--accent:var(--green)"><span class="stat-label">宸茶瀹?/span><span class="stat-value"><span id="finishedBooks">0</span><small>鏈?/small></span></div>
+            </div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鎴戠殑涔︽灦</h2>
+            <div id="bookList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="travel">
+        <div class="page-head">
+          <div><div class="eyebrow">GO SOMEWHERE</div><h1>鏃呰璁″垝</h1><p class="subtitle">鏈熷緟浠庤鍒掑紑濮嬶紝椋庢櫙鍦ㄨ矾涓婂睍寮€銆?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">鍒涘缓鏃呯▼</h2>
+            <form id="tripForm" class="form-row">
+              <input id="tripDestination" required maxlength="50" placeholder="鐩殑鍦?>
+              <div class="form-row cols-2">
+                <input id="tripStart" type="date" required>
+                <input id="tripEnd" type="date" required>
+              </div>
+              <button class="primary full" type="submit" style="background:var(--cyan);color:#075b7b">寮€濮嬭鍒?/button>
+            </form>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鎴戠殑鏃呰</h2>
+            <div id="tripList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="english">
+        <div class="page-head">
+          <div><div class="eyebrow">ONE WORD A DAY</div><h1>鑻辫瀛︿範</h1><p class="subtitle">姣忓ぉ涓€鐐圭偣锛岃璇嶆眹鐪熸鎴愪负浣犵殑琛ㄨ揪銆?/p></div>
+          <div class="date-chip current-date"></div>
+        </div>
+        <div class="stats">
+          <div class="stat" style="--accent:var(--indigo)"><span class="stat-label">绱璇嶆眹</span><span class="stat-value"><span id="wordTotal">0</span><small>涓?/small></span></div>
+          <div class="stat" style="--accent:var(--green)"><span class="stat-label">浠婃棩瀛︿範</span><span class="stat-value"><span id="wordToday">0</span><small>涓?/small></span></div>
+          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">寰呭涔?/span><span class="stat-value"><span id="wordReview">0</span><small>涓?/small></span></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 class="card-title">娣诲姞鍗曡瘝</h2>
+            <form id="wordForm" class="form-row">
+              <div class="form-row cols-2">
+                <input id="wordEnglish" required maxlength="40" placeholder="鑻辨枃鍗曡瘝">
+                <input id="wordPhonetic" maxlength="60" placeholder="闊虫爣 /f蓹藞net瑟k/">
+              </div>
+              <input id="wordMeaning" required maxlength="100" placeholder="涓枃閲婁箟">
+              <button class="primary full" type="submit" style="background:var(--indigo)">鍔犲叆璇嶅簱</button>
+            </form>
+            <h2 class="card-title" style="margin-top:22px">姣忔棩鐩爣</h2>
+            <div class="goal-row">
+              <input id="dailyGoal" type="number" min="1" max="100" value="10">
+              <div class="goal-progress">
+                <div class="progress-track"><div class="progress-fill" id="goalFill"></div></div>
+                <div class="item-meta" id="goalText"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">鏈懆瀛︿範瓒嬪娍</h2>
+            <div class="chart-wrap"><canvas id="wordChart"></canvas></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <h2 class="card-title">鍗曡瘝鍗＄墖 <span class="item-meta">鐐瑰嚮鍗＄墖缈昏浆閲婁箟</span></h2>
+          <div id="wordList" class="word-area"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button class="ai-fab" id="aiFab" aria-label="鎵撳紑 AI 鏅鸿兘褰曞叆">馃</button>
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-head"><div><b>AI 鏅鸿兘褰曞叆</b><small>鐢ㄤ竴鍙ヨ瘽璁板綍鐢熸椿</small></div><button class="ai-close" id="aiClose">脳</button></div>
+    <div class="ai-messages" id="aiMessages"><div class="bubble bot">浣犲ソ锛佽瘯璇曞鎴戣鈥滆窇姝?30 鍒嗛挓鈥濃€滆姳浜?50 鍧楀悆鍗堥キ鈥濇垨鈥滀粖澶╁績鎯呭緢濂解€濄€?/div></div>
+    <div class="ai-examples"><button data-example="璺戞 30 鍒嗛挓">璺戞 30 鍒嗛挓</button><button data-example="鑺变簡 50 鍧楀悆鍗堥キ">鑺变簡 50 鍧?/button><button data-example="浠婂ぉ蹇冩儏寰堝ソ">蹇冩儏寰堝ソ</button></div>
+    <form class="ai-input" id="aiForm"><input id="aiText" autocomplete="off" placeholder="鎻忚堪浣犲垰鍒氬仛鐨勪簨鈥?><button>鍙戦€?/button></form>
+  </div>
+
+  <div class="modal" id="analysisModal">
+    <div class="modal-card">
+      <div class="modal-head"><div><div class="eyebrow">WEEKLY REVIEW</div><h2>鏈懆鏁版嵁鍒嗘瀽</h2></div><button class="close-modal" id="closeAnalysis">脳</button></div>
+      <div id="analysisContent"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (() => {
+      "use strict";
+      const STORAGE_KEY = "lifeOSData_v1";
+      const categories = ["椁愰ギ","浜ら€?,"璐墿","濞变箰","浣忔埧","鍖荤枟","鏁欒偛","宸ヨ祫","鐞嗚储","鍏朵粬"];
+      const sports = [
+        ["璺戞","馃弮"],["娓告吵","馃強"],["鍋ヨ韩","馃弸锔?],["楠戣","馃毚"],
+        ["鐟滀冀","馃"],["绡悆","馃弨"],["璺崇怀","馃"],["鏁ｆ","馃毝"]
+      ];
+      const moods = [
+        { emoji:"馃槉", score:6, label:"寮€蹇? }, { emoji:"馃檪", score:5, label:"涓嶉敊" },
+        { emoji:"馃槓", score:4, label:"骞抽潤" }, { emoji:"馃檨", score:3, label:"浣庤惤" },
+        { emoji:"馃槩", score:2, label:"闅捐繃" }, { emoji:"馃槨", score:1, label:"鐢熸皵" }
+      ];
+      const blankData = () => ({
+        version: 1, todos: [], transactions: [], exercises: [], moods: [], books: [],
+        readingLogs: [], trips: [], words: [], settings: { dailyGoal: 10 }
+      });
+      let data = loadData();
+      let charts = {};
+      let toastTimer;
+
+      function loadData() {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          return normalizeData(parsed);
+        } catch (_) { return blankData(); }
+      }
+      function normalizeData(raw) {
+        const fresh = blankData();
+        if (!raw || typeof raw !== "object") return fresh;
+        Object.keys(fresh).forEach(k => {
+          if (Array.isArray(fresh[k])) fresh[k] = Array.isArray(raw[k]) ? raw[k] : [];
+          else if (k === "settings") fresh.settings = { ...fresh.settings, ...(raw.settings || {}) };
+        });
+        return fresh;
+      }
+      function save() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+        catch (_) { toast("瀛樺偍绌洪棿涓嶈冻锛岃鍏堝鍑哄浠?); }
+      }
+      const $ = s => document.querySelector(s);
+      const $$ = s => [...document.querySelectorAll(s)];
+      const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+      const iso = d => {
+        const x = new Date(d);
+        const y = x.getFullYear(), m = String(x.getMonth()+1).padStart(2,"0"), day = String(x.getDate()).padStart(2,"0");
+        return `${y}-${m}-${day}`;
+      };
+      const today = () => iso(new Date());
+      const money = n => "楼" + Number(n || 0).toLocaleString("zh-CN", {minimumFractionDigits:2, maximumFractionDigits:2});
+      const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const dateText = d => new Date(d + "T12:00:00").toLocaleDateString("zh-CN", {month:"short", day:"numeric"});
+      const inMonth = d => d && d.slice(0,7) === today().slice(0,7);
+      function startOfWeek() {
+        const d = new Date(); const day = d.getDay() || 7;
+        d.setHours(0,0,0,0); d.setDate(d.getDate() - day + 1); return d;
+      }
+      function weekDates() {
+        const start = startOfWeek();
+        return Array.from({length:7}, (_,i) => { const d = new Date(start); d.setDate(start.getDate()+i); return iso(d); });
+      }
+      const inWeek = d => weekDates().includes(d);
+      const empty = (icon, text) => `<div class="empty"><span class="empty-icon">${icon}</span>${text}</div>`;
+      function toast(msg) {
+        const el = $("#toast"); el.textContent = msg; el.classList.add("show");
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2100);
+      }
+      function removeBy(list, id) { data[list] = data[list].filter(x => x.id !== id); save(); renderAll(); }
+
+      function init() {
+        const d = new Date().toLocaleDateString("zh-CN", {year:"numeric", month:"long", day:"numeric", weekday:"long"});
+        $$(".current-date").forEach(el => el.textContent = d);
+        ["moneyDate","sportDate","moodDate","tripStart","tripEnd"].forEach(id => $("#"+id).value = today());
+        $("#moneyCategory").innerHTML = categories.map(c => `<option>${c}</option>`).join("");
+        $("#sportChoices").innerHTML = sports.map((s,i) => `<label class="sport-choice"><input type="radio" name="sport" value="${s[0]}" ${i===0?"checked":""}><span><b>${s[1]}</b>${s[0]}</span></label>`).join("");
+        $("#moodChoices").innerHTML = moods.map((m,i) => `<label class="mood-choice" title="${m.label}"><input type="radio" name="mood" value="${m.score}" ${i===0?"checked":""}><span>${m.emoji}</span></label>`).join("");
+        bindEvents();
+        renderAll();
+      }
+
+      function bindEvents() {
+        $$(".nav-btn").forEach(btn => btn.addEventListener("click", () => switchModule(btn.dataset.target)));
+        $("#todoForm").addEventListener("submit", e => {
+          e.preventDefault();
+          data.todos.unshift({id:uid(), text:$("#todoText").value.trim(), priority:$("#todoPriority").value, done:false, date:today(), createdAt:Date.now()});
+          $("#todoText").value = ""; save(); renderDaily(); toast("寰呭姙宸叉坊鍔?);
+        });
+        $("#financeForm").addEventListener("submit", e => {
+          e.preventDefault();
+          data.transactions.unshift({id:uid(), type:$('input[name="moneyType"]:checked').value, amount:+$("#moneyAmount").value, category:$("#moneyCategory").value, note:$("#moneyNote").value.trim(), date:$("#moneyDate").value});
+          e.target.reset(); $('input[name="moneyType"][value="expense"]').checked = true; $("#moneyDate").value = today(); save(); renderFinance(); toast("璐︾洰宸蹭繚瀛?);
+        });
+        $("#fitnessForm").addEventListener("submit", e => {
+          e.preventDefault();
+          data.exercises.unshift({id:uid(), type:$('input[name="sport"]:checked').value, duration:+$("#sportDuration").value, calories:+$("#sportCalories").value, date:$("#sportDate").value});
+          $("#sportDuration").value = ""; $("#sportCalories").value = ""; $("#sportDate").value = today(); save(); renderFitness(); toast("杩愬姩鎵撳崱鎴愬姛");
+        });
+        $("#moodForm").addEventListener("submit", e => {
+          e.preventDefault();
+          const score = +$('input[name="mood"]:checked').value;
+          data.moods.unshift({id:uid(), score, emoji:moods.find(m=>m.score===score).emoji, text:$("#moodText").value.trim(), date:$("#moodDate").value});
+          $("#moodText").value = ""; $("#moodDate").value = today(); save(); renderMood(); toast("蹇冩儏宸茶娓╂煍璁板綍");
+        });
+        $("#bookForm").addEventListener("submit", e => {
+          e.preventDefault();
+          data.books.unshift({id:uid(), title:$("#bookTitle").value.trim(), author:$("#bookAuthor").value.trim(), totalPages:+$("#bookPages").value, currentPage:0, notes:[]});
+          e.target.reset(); save(); renderReading(); toast("涔︾睄宸插姞鍏ヤ功鏋?);
+        });
+        $("#tripForm").addEventListener("submit", e => {
+          e.preventDefault();
+          if ($("#tripEnd").value < $("#tripStart").value) return toast("缁撴潫鏃ユ湡涓嶈兘鏃╀簬寮€濮嬫棩鏈?);
+          data.trips.unshift({id:uid(), destination:$("#tripDestination").value.trim(), startDate:$("#tripStart").value, endDate:$("#tripEnd").value, itinerary:[], packing:[]});
+          e.target.reset(); $("#tripStart").value=$("#tripEnd").value=today(); save(); renderTravel(); toast("鏂扮殑鏃呯▼宸插垱寤?);
+        });
+        $("#wordForm").addEventListener("submit", e => {
+          e.preventDefault();
+          data.words.unshift({id:uid(), english:$("#wordEnglish").value.trim(), phonetic:$("#wordPhonetic").value.trim(), meaning:$("#wordMeaning").value.trim(), date:today(), reviewed:false});
+          e.target.reset(); save(); renderEnglish(); toast("鏂板崟璇嶅凡鍔犲叆");
+        });
+        $("#dailyGoal").addEventListener("change", e => {
+          data.settings.dailyGoal = Math.max(1, Math.min(100, +e.target.value || 10)); save(); renderEnglish();
+        });
+        $("#exportBtn").addEventListener("click", exportData);
+        $("#importBtn").addEventListener("click", () => $("#importFile").click());
+        $("#importFile").addEventListener("change", importData);
+        $("#analysisBtn").addEventListener("click", openAnalysis);
+        $("#closeAnalysis").addEventListener("click", () => $("#analysisModal").classList.remove("open"));
+        $("#analysisModal").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove("open"); });
+        $("#aiFab").addEventListener("click", () => { $("#aiPanel").classList.toggle("open"); if ($("#aiPanel").classList.contains("open")) $("#aiText").focus(); });
+        $("#aiClose").addEventListener("click", () => $("#aiPanel").classList.remove("open"));
+        $$(".ai-examples button").forEach(b => b.addEventListener("click", () => { $("#aiText").value=b.dataset.example; $("#aiForm").requestSubmit(); }));
+        $("#aiForm").addEventListener("submit", e => { e.preventDefault(); const text=$("#aiText").value.trim(); if (!text) return; aiRecord(text); $("#aiText").value=""; });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") { $("#analysisModal").classList.remove("open"); $("#aiPanel").classList.remove("open"); }});
+      }
+
+      function switchModule(id) {
+        $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.target === id));
+        $$(".module").forEach(m => m.classList.toggle("active", m.id === id));
+        window.scrollTo({top:0});
+        if (id === "finance") setTimeout(renderFinanceChart, 40);
+        if (id === "mood") setTimeout(renderMoodChart, 40);
+        if (id === "english") setTimeout(renderWordChart, 40);
+      }
+
+      function renderAll() {
+        renderDaily(); renderFinance(); renderFitness(); renderMood(); renderReading(); renderTravel(); renderEnglish();
+      }
+
+      function renderDaily() {
+        const items = data.todos.filter(x => x.date === today()).sort((a,b) => Number(a.done)-Number(b.done));
+        const done = items.filter(x => x.done).length, pct = items.length ? Math.round(done/items.length*100) : 0;
+        $("#todoCount").textContent = `${done}/${items.length} 宸插畬鎴恅;
+        $("#todoRate").textContent = pct + "%"; $("#todoRing").style.setProperty("--pct",pct);
+        $("#todoEncourage").textContent = pct===100 && items.length ? "浠婂ぉ鐨勮鍒掑叏閮ㄥ畬鎴愶紝鐪熸锛? : pct>=60 ? "杩涘睍寰堝ソ锛岀户缁繚鎸併€? : items.length ? "涓€娆′笓娉ㄤ竴浠朵簨锛屾參鎱㈡潵銆? : "浠庣涓€浠跺皬浜嬪紑濮嬨€?;
+        $("#todoList").innerHTML = items.length ? items.map(x => `<div class="list-item ${x.done?"done":""}">
+          <input class="check todo-check" type="checkbox" data-id="${x.id}" ${x.done?"checked":""}>
+          <div class="item-main"><div class="item-title">${esc(x.text)}</div><div class="item-meta">浠婂ぉ</div></div>
+          <span class="priority ${x.priority}">${{high:"楂?,medium:"涓?,low:"浣?}[x.priority]}</span>
+          <button class="delete todo-delete" data-id="${x.id}">脳</button></div>`).join("") : empty("鉁?,"浠婂ぉ杩樻病鏈夊緟鍔?);
+        $$(".todo-check").forEach(el => el.onclick = () => { const x=data.todos.find(t=>t.id===el.dataset.id); if(x)x.done=el.checked; save(); renderDaily(); });
+        $$(".todo-delete").forEach(el => el.onclick = () => removeBy("todos",el.dataset.id));
+      }
+
+      function renderFinance() {
+        const month = data.transactions.filter(x => inMonth(x.date));
+        const income = month.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0);
+        const expense = month.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
+        $("#monthIncome").textContent=money(income); $("#monthExpense").textContent=money(expense); $("#monthBalance").textContent=money(income-expense);
+        const recent = [...data.transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
+        $("#moneyList").innerHTML = recent.length ? recent.map(x=>`<div class="list-item">
+          <div style="font-size:21px">${categoryIcon(x.category)}</div><div class="item-main"><div class="item-title">${esc(x.note||x.category)}</div><div class="item-meta">${esc(x.category)} 路 ${dateText(x.date)}</div></div>
+          <b style="color:${x.type==="income"?"var(--green)":"var(--ink)"}">${x.type==="income"?"+":"-"}${money(x.amount)}</b><button class="delete money-delete" data-id="${x.id}">脳</button></div>`).join("") : empty("楼","杩樻病鏈夎处鐩褰?);
+        $$(".money-delete").forEach(el=>el.onclick=()=>removeBy("transactions",el.dataset.id));
+        if ($("#finance").classList.contains("active")) renderFinanceChart();
+      }
+      function categoryIcon(c) { return ({椁愰ギ:"馃崪",浜ら€?"馃殗",璐墿:"馃泹锔?,濞变箰:"馃幀",浣忔埧:"馃彔",鍖荤枟:"馃拪",鏁欒偛:"馃摎",宸ヨ祫:"馃捈",鐞嗚储:"馃搱",鍏朵粬:"馃Ь"})[c]||"馃Ь"; }
+      function chartReady() { return typeof Chart !== "undefined"; }
+      function renderFinanceChart() {
+        if (!chartReady()) return;
+        const ex=data.transactions.filter(x=>x.type==="expense"&&inMonth(x.date));
+        const sums=categories.map(c=>ex.filter(x=>x.category===c).reduce((s,x)=>s+x.amount,0));
+        const labels=categories.filter((_,i)=>sums[i]>0), vals=sums.filter(v=>v>0);
+        if(charts.expense) charts.expense.destroy();
+        charts.expense=new Chart($("#expenseChart"),{type:"doughnut",data:{labels:labels.length?labels:["鏆傛棤鏀嚭"],datasets:[{data:vals.length?vals:[1],backgroundColor:vals.length?["#ff9500","#5ac8fa","#ff375f","#af52de","#0071e3","#34c759","#5856d6","#7d7d82","#c7a467","#a1a1a6"]:["#ececf0"],borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:"64%",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,boxWidth:8,padding:14,font:{family:"-apple-system",size:11}}}}}});
+      }
+
+      function renderFitness() {
+        const week=data.exercises.filter(x=>inWeek(x.date));
+        $("#weekMinutes").textContent=week.reduce((s,x)=>s+x.duration,0);
+        $("#weekCalories").textContent=week.reduce((s,x)=>s+x.calories,0);
+        $("#streakDays").textContent=calcStreak();
+        const dates=weekDates(), names=["涓€","浜?,"涓?,"鍥?,"浜?,"鍏?,"鏃?];
+        $("#heatmap").innerHTML=dates.map((d,i)=>{
+          const min=data.exercises.filter(x=>x.date===d).reduce((s,x)=>s+x.duration,0);
+          const level=min>=60?3:min>=30?2:min>0?1:0;
+          return `<div class="heat-day"><div class="heat-square ${level?"l"+level:""}">${min?min+"鈥?:"路"}</div><div class="heat-label">鍛?{names[i]}</div></div>`;
+        }).join("");
+        const list=[...data.exercises].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
+        $("#fitnessList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:21px">${sports.find(s=>s[0]===x.type)?.[1]||"馃弲"}</div><div class="item-main"><div class="item-title">${esc(x.type)} 路 ${x.duration} 鍒嗛挓</div><div class="item-meta">${dateText(x.date)} 路 ${x.calories} 鍗冨崱</div></div><button class="delete fitness-delete" data-id="${x.id}">脳</button></div>`).join(""):empty("馃弮","杩堝嚭绗竴姝ワ紝瀹屾垚涓€娆℃墦鍗?);
+        $$(".fitness-delete").forEach(el=>el.onclick=()=>removeBy("exercises",el.dataset.id));
+      }
+      function calcStreak() {
+        const set=new Set(data.exercises.map(x=>x.date)); if(!set.size)return 0;
+        let d=new Date(), count=0;
+        if(!set.has(iso(d))){d.setDate(d.getDate()-1); if(!set.has(iso(d)))return 0;}
+        while(set.has(iso(d))){count++;d.setDate(d.getDate()-1);} return count;
+      }
+
+      function renderMood() {
+        const list=[...data.moods].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
+        $("#moodList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:25px">${x.emoji}</div><div class="item-main"><div class="item-title">${esc(x.text||"璁板綍浜嗗綋涓嬬殑蹇冩儏")}</div><div class="item-meta">${dateText(x.date)}</div></div><button class="delete mood-delete" data-id="${x.id}">脳</button></div>`).join(""):empty("馃槉","鍐欎笅浠婂ぉ鐨勭涓€绡囧績鎯?);
+        $$(".mood-delete").forEach(el=>el.onclick=()=>removeBy("moods",el.dataset.id));
+        if($("#mood").classList.contains("active"))renderMoodChart();
+      }
+      function renderMoodChart() {
+        if(!chartReady())return;
+        const dates=weekDates(), vals=dates.map(d=>{const ms=data.moods.filter(x=>x.date===d);return ms.length?ms.reduce((s,x)=>s+x.score,0)/ms.length:null});
+        if(charts.mood)charts.mood.destroy();
+        charts.mood=new Chart($("#moodChart"),{type:"line",data:{labels:["鍛ㄤ竴","鍛ㄤ簩","鍛ㄤ笁","鍛ㄥ洓","鍛ㄤ簲","鍛ㄥ叚","鍛ㄦ棩"],datasets:[{data:vals,borderColor:"#ff375f",backgroundColor:"rgba(255,55,95,.10)",fill:true,tension:.38,spanGaps:true,pointBackgroundColor:"#fff",pointBorderColor:"#ff375f",pointBorderWidth:2,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:1,max:6,ticks:{stepSize:1,callback:v=>moods.find(m=>m.score===v)?.emoji||""},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"蹇冩儏 "+(moods.find(m=>m.score===Math.round(c.raw))?.emoji||"")}}}}});
+      }
+
+      function renderReading() {
+        $("#bookCount").textContent=data.books.length; $("#finishedBooks").textContent=data.books.filter(x=>x.currentPage>=x.totalPages).length;
+        $("#bookList").innerHTML=data.books.length?data.books.map(b=>{
+          const pct=Math.min(100,Math.round(b.currentPage/b.totalPages*100));
+          return `<div class="book-card"><div class="book-head"><div><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)} 路 ${b.currentPage}/${b.totalPages} 椤?/div></div><button class="delete book-delete" data-id="${b.id}">脳</button></div>
+            <div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--purple),var(--pink))"></div></div><strong>${pct}%</strong></div>
+            <div class="inline-controls"><input type="number" class="book-page" data-id="${b.id}" min="0" max="${b.totalPages}" value="${b.currentPage}" aria-label="褰撳墠椤垫暟"><button class="soft-btn update-page" data-id="${b.id}">鏇存柊杩涘害</button></div>
+            <div class="inline-controls"><input class="book-note" data-id="${b.id}" maxlength="160" placeholder="鍐欎竴鍙ヨ涔︾瑪璁扳€?><button class="soft-btn add-note" data-id="${b.id}" style="color:var(--purple);background:#f7effb">娣诲姞</button></div>
+            <div class="notes">${(b.notes||[]).slice(0,3).map(n=>`<div class="note">${esc(n.text)}<div class="item-meta">${dateText(n.date)}</div></div>`).join("")}</div></div>`;
+        }).join(""):empty("馃摉","涔︽灦杩樻槸绌虹殑锛屽姞鍏ヤ竴鏈兂璇荤殑涔?);
+        $$(".book-delete").forEach(el=>el.onclick=()=>removeBy("books",el.dataset.id));
+        $$(".update-page").forEach(el=>el.onclick=()=>{
+          const b=data.books.find(x=>x.id===el.dataset.id), input=$(`.book-page[data-id="${el.dataset.id}"]`);
+          const old=b.currentPage, next=Math.max(0,Math.min(b.totalPages,+input.value||0)); b.currentPage=next;
+          if(next>old)data.readingLogs.push({id:uid(),bookId:b.id,pages:next-old,date:today()});
+          save();renderReading();toast("闃呰杩涘害宸叉洿鏂?);
+        });
+        $$(".add-note").forEach(el=>el.onclick=()=>{
+          const b=data.books.find(x=>x.id===el.dataset.id), input=$(`.book-note[data-id="${el.dataset.id}"]`);
+          if(!input.value.trim())return; b.notes=b.notes||[];b.notes.unshift({id:uid(),text:input.value.trim(),date:today()});save();renderReading();toast("璇讳功绗旇宸蹭繚瀛?);
+        });
+      }
+
+      function renderTravel() {
+        $("#tripList").innerHTML=data.trips.length?data.trips.map(t=>`<div class="trip-card">
+          <div class="trip-head"><div><div class="trip-title">鉁堬笍 ${esc(t.destination)}</div><div class="trip-date">${dateText(t.startDate)} 鈥?${dateText(t.endDate)}</div></div><button class="delete trip-delete" data-id="${t.id}">脳</button></div>
+          <div class="trip-panels"><div><div class="mini-title">琛岀▼瀹夋帓</div>
+            ${(t.itinerary||[]).map(i=>`<div class="mini-item"><span style="color:var(--blue)">${esc(i.time||"瀹夋帓")}</span><span>${esc(i.text)}</span><button class="delete sub-delete" data-kind="itinerary" data-trip="${t.id}" data-id="${i.id}">脳</button></div>`).join("")}
+            <div class="inline-controls"><input class="trip-schedule" data-id="${t.id}" placeholder="濡傦細09:00 鍙傝鍗氱墿棣?><button class="soft-btn add-schedule" data-id="${t.id}">娣诲姞</button></div></div>
+          <div><div class="mini-title">鎵撳寘娓呭崟</div>
+            ${(t.packing||[]).map(i=>`<div class="mini-item ${i.done?"done":""}"><input class="check pack-check" type="checkbox" data-trip="${t.id}" data-id="${i.id}" ${i.done?"checked":""}><span class="item-title" style="flex:1">${esc(i.text)}</span><button class="delete sub-delete" data-kind="packing" data-trip="${t.id}" data-id="${i.id}">脳</button></div>`).join("")}
+            <div class="inline-controls"><input class="trip-pack" data-id="${t.id}" placeholder="娣诲姞瑕佸甫鐨勭墿鍝?><button class="soft-btn add-pack" data-id="${t.id}">娣诲姞</button></div></div></div></div>`).join(""):empty("馃С","鍒涘缓涓€娈靛€煎緱鏈熷緟鐨勬梾绋?);
+        $$(".trip-delete").forEach(el=>el.onclick=()=>removeBy("trips",el.dataset.id));
+        $$(".add-schedule").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.id),input=$(`.trip-schedule[data-id="${el.dataset.id}"]`);if(!input.value.trim())return;const val=input.value.trim(),m=val.match(/^(\d{1,2}[:锛歖\d{2})\s*(.*)$/);t.itinerary.push({id:uid(),time:m?m[1].replace("锛?,":"):"瀹夋帓",text:m?m[2]:val});save();renderTravel();});
+        $$(".add-pack").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.id),input=$(`.trip-pack[data-id="${el.dataset.id}"]`);if(!input.value.trim())return;t.packing.push({id:uid(),text:input.value.trim(),done:false});save();renderTravel();});
+        $$(".pack-check").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.trip),i=t.packing.find(x=>x.id===el.dataset.id);i.done=el.checked;save();renderTravel();});
+        $$(".sub-delete").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.trip);t[el.dataset.kind]=t[el.dataset.kind].filter(x=>x.id!==el.dataset.id);save();renderTravel();});
+      }
+
+      function renderEnglish() {
+        const todayWords=data.words.filter(x=>x.date===today()).length, goal=+data.settings.dailyGoal||10;
+        $("#wordTotal").textContent=data.words.length;$("#wordToday").textContent=todayWords;$("#wordReview").textContent=data.words.filter(x=>!x.reviewed&&x.date!==today()).length;
+        $("#dailyGoal").value=goal;$("#goalFill").style.width=Math.min(100,todayWords/goal*100)+"%";$("#goalText").textContent=`浠婃棩 ${todayWords}/${goal} 涓?{todayWords>=goal?" 路 宸茶揪鎴愮洰鏍?:""}`;
+        $("#wordList").innerHTML=data.words.length?data.words.map(w=>`<div class="word-card" data-id="${w.id}">
+          <div class="word-inner"><div class="word-face front"><div class="word-actions"><button class="delete word-delete" data-id="${w.id}">脳</button></div><div class="word-en">${esc(w.english)}</div><div class="word-ph">${esc(w.phonetic||"")}</div><div class="word-hint">鐐瑰嚮鏌ョ湅閲婁箟</div></div>
+          <div class="word-face back"><div class="word-cn">${esc(w.meaning)}</div><button class="soft-btn word-review" data-id="${w.id}" style="margin-top:12px;padding:6px 10px">${w.reviewed?"宸插涔?鉁?:"鏍囪宸插涔?}</button></div></div></div>`).join(""):empty("A","娣诲姞绗竴涓兂璁颁綇鐨勫崟璇?);
+        $$(".word-card").forEach(el=>el.onclick=e=>{if(!e.target.closest("button"))el.classList.toggle("flipped");});
+        $$(".word-delete").forEach(el=>el.onclick=e=>{e.stopPropagation();removeBy("words",el.dataset.id);});
+        $$(".word-review").forEach(el=>el.onclick=e=>{e.stopPropagation();const w=data.words.find(x=>x.id===el.dataset.id);w.reviewed=!w.reviewed;save();renderEnglish();});
+        if($("#english").classList.contains("active"))renderWordChart();
+      }
+      function renderWordChart() {
+        if(!chartReady())return;
+        const vals=weekDates().map(d=>data.words.filter(x=>x.date===d).length);
+        if(charts.word)charts.word.destroy();
+        charts.word=new Chart($("#wordChart"),{type:"bar",data:{labels:["鍛ㄤ竴","鍛ㄤ簩","鍛ㄤ笁","鍛ㄥ洓","鍛ㄤ簲","鍛ㄥ叚","鍛ㄦ棩"],datasets:[{data:vals,backgroundColor:["#d9d9ff","#c9c8ff","#aaa9f7","#8c8aec","#7775e7","#6866de","#5856d6"],borderRadius:7,borderSkipped:false,maxBarThickness:34}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+      }
+
+      function addBubble(text,type) {
+        const el=document.createElement("div");el.className=`bubble ${type}`;el.textContent=text;$("#aiMessages").appendChild(el);$("#aiMessages").scrollTop=$("#aiMessages").scrollHeight;
+      }
+      function aiRecord(text) {
+        addBubble(text,"user");
+        const normalized=text.replace(/\s+/g,"");
+        const amount=+(normalized.match(/(\d+(?:\.\d+)?)\s*(?:鍏億鍧梶鍧楅挶)/)?.[1]||0);
+        const sport=sports.find(s=>normalized.includes(s[0]));
+        if(sport){
+          let duration=+(normalized.match(/(\d+(?:\.\d+)?)\s*(灏忔椂|鍒嗛挓|鍒?/)?.[1]||30);
+          if(normalized.match(/灏忔椂/))duration*=60;
+          const calories=+(normalized.match(/(\d+)\s*(?:鍗冨崱|鍗¤矾閲寍澶у崱)/)?.[1]||Math.round(duration*({璺戞:9,娓告吵:8,鍋ヨ韩:7,楠戣:7,鐟滀冀:3,绡悆:8,璺崇怀:10,鏁ｆ:3}[sport[0]]||6)));
+          data.exercises.unshift({id:uid(),type:sport[0],duration:Math.round(duration),calories,date:today()});save();renderFitness();
+          addBubble(`宸茶褰曪細${sport[0]} ${Math.round(duration)} 鍒嗛挓锛岀害娑堣€?${calories} 鍗冨崱銆俙,"bot");return;
+        }
+        if(amount && /(鑺变簡|娑堣垂|鏀嚭|涔皘浠樹簡|浠樻|鐢ㄤ簡)/.test(normalized)){
+          const c=guessCategory(normalized);data.transactions.unshift({id:uid(),type:"expense",amount,category:c,note:text,date:today()});save();renderFinance();
+          addBubble(`宸茶涓烘敮鍑猴細${money(amount)} 路 ${c}銆俙,"bot");return;
+        }
+        if(amount && /(鏀跺叆|宸ヨ祫|璧氫簡|鍒拌处|濂栭噾|鏀跺埌)/.test(normalized)){
+          const c=normalized.includes("宸ヨ祫")?"宸ヨ祫":"鍏朵粬";data.transactions.unshift({id:uid(),type:"income",amount,category:c,note:text,date:today()});save();renderFinance();
+          addBubble(`宸茶涓烘敹鍏ワ細${money(amount)} 路 ${c}銆俙,"bot");return;
+        }
+        const moodResult=guessMood(normalized);
+        if(moodResult){
+          data.moods.unshift({id:uid(),score:moodResult.score,emoji:moodResult.emoji,text,date:today()});save();renderMood();
+          addBubble(`宸茶褰曚粖澶╃殑蹇冩儏 ${moodResult.emoji}锛屼篃璇峰ソ濂界収椤炬鍒荤殑鑷繁銆俙,"bot");return;
+        }
+        if(/(寰呭姙|鎻愰啋鎴憒璁板緱|闇€瑕亅瑕佸幓|瑕佸仛)/.test(normalized)){
+          const task=text.replace(/^(寰呭姙[锛?]?|鎻愰啋鎴憒璁板緱|闇€瑕亅鎴戣|瑕?/,"").trim()||text;
+          const p=/(绱ф€閲嶈|鍔″繀)/.test(normalized)?"high":/(鏈夌┖|涓嶆€?/.test(normalized)?"low":"medium";
+          data.todos.unshift({id:uid(),text:task,priority:p,done:false,date:today(),createdAt:Date.now()});save();renderDaily();
+          addBubble(`宸叉坊鍔犱粖鏃ュ緟鍔烇細${task}`,"bot");return;
+        }
+        addBubble("鎴戣繕娌″畬鍏ㄥ惉鎳傘€傚彲浠ヨ鈥滆窇姝?30 鍒嗛挓鈥濃€滆姳浜?50 鍧楀悆楗€濃€滃伐璧勫埌璐?8000鈥濇垨鈥滀粖澶╂湁鐐归毦杩団€濄€?,"bot");
+      }
+      function guessCategory(t) {
+        if(/楗瓅椁恷濂惰尪|鍜栧暋|姘存灉|鑿渱澶栧崠/.test(t))return"椁愰ギ";
+        if(/杞鍦伴搧|鍏氦|鎵撹溅|娌硅垂|鏈虹エ/.test(t))return"浜ら€?;
+        if(/鎴跨|鐗╀笟|姘寸數|浣忔埧/.test(t))return"浣忔埧";
+        if(/鑽瘄鍖婚櫌|鐪嬬梾|浣撴/.test(t))return"鍖荤枟";
+        if(/璇緗鍩硅|涔瀛︿範/.test(t))return"鏁欒偛";
+        if(/鐢靛奖|娓告垙|婕斿嚭|濞变箰/.test(t))return"濞变箰";
+        if(/鍩洪噾|鑲＄エ|鐞嗚储/.test(t))return"鐞嗚储";
+        if(/涔皘璐墿|琛ｆ湇|闉媩鍖?.test(t))return"璐墿";
+        return"鍏朵粬";
+      }
+      function guessMood(t) {
+        if(/寮€蹇億寰堝ソ|楂樺叴|骞哥|瓒呮|鎰夊揩|蹇箰/.test(t))return moods[0];
+        if(/涓嶉敊|杩樺ソ|杞绘澗|婊¤冻/.test(t))return moods[1];
+        if(/骞抽潤|涓€鑸瑋鏅€殀娌℃劅瑙?.test(t))return moods[2];
+        if(/浣庤惤|閮侀椃|涓嶅ソ|鐑︽伡|鐤叉儷|绱?.test(t))return moods[3];
+        if(/闅捐繃|浼ゅ績|鎯冲摥|鎮蹭激/.test(t))return moods[4];
+        if(/鐢熸皵|鎰ゆ€抾鐏ぇ|鎭肩伀/.test(t))return moods[5];
+        return null;
+      }
+
+      function openAnalysis() {
+        const weekTodos=data.todos.filter(x=>inWeek(x.date)), weekMoney=data.transactions.filter(x=>inWeek(x.date));
+        const weekEx=data.exercises.filter(x=>inWeek(x.date)), weekMood=data.moods.filter(x=>inWeek(x.date));
+        const pages=data.readingLogs.filter(x=>inWeek(x.date)).reduce((s,x)=>s+x.pages,0);
+        const notes=data.books.reduce((s,b)=>s+(b.notes||[]).filter(n=>inWeek(n.date)).length,0);
+        const packing=data.trips.flatMap(t=>t.packing||[]), learned=data.words.filter(x=>inWeek(x.date)).length;
+        const moodAvg=weekMood.length?(weekMood.reduce((s,x)=>s+x.score,0)/weekMood.length).toFixed(1):"鈥?;
+        const income=weekMoney.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0), expense=weekMoney.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
+        const cards=[
+          ["鉁?,"姣忔棩璁″垝",`${weekTodos.filter(x=>x.done).length}/${weekTodos.length} 椤瑰畬鎴恅],
+          ["楼","璁拌处鏈?,`鏀跺叆 ${money(income)} 路 鏀嚭 ${money(expense)}`],
+          ["馃弮","杩愬姩鎵撳崱",`${new Set(weekEx.map(x=>x.date)).size} 澶?路 ${weekEx.reduce((s,x)=>s+x.duration,0)} 鍒嗛挓`],
+          ["馃槉","蹇冩儏鏃ヨ",`${weekMood.length} 娆¤褰?路 鍧囧€?${moodAvg}/6`],
+          ["馃摉","璇讳功鏀惰幏",`闃呰 ${pages} 椤?路 ${notes} 鏉＄瑪璁癭],
+          ["鉁堬笍","鏃呰璁″垝",`${data.trips.filter(t=>t.endDate>=today()).length} 涓緟鍑哄彂 路 娓呭崟 ${packing.filter(x=>x.done).length}/${packing.length}`],
+          ["A","鑻辫瀛︿範",`鏂板 ${learned} 涓?路 绱 ${data.words.length} 涓猔]
+        ];
+        const insights=[];
+        if(weekTodos.length && weekTodos.filter(x=>x.done).length/weekTodos.length>=.75)insights.push("鏈懆璁″垝瀹屾垚搴﹀緢绋筹紝寤鸿涓嬪懆缁х画淇濇寔姣忓ぉ 3 浠舵牳蹇冧换鍔＄殑鑺傚銆?);
+        else insights.push("鎶婃瘡鏃ヨ鍒掔缉鍑忎负灏戣€屾槑纭殑閲嶇偣锛岄€氬父姣斿垪寰堥暱鐨勬竻鍗曟洿瀹规槗瀹屾垚銆?);
+        if(weekEx.reduce((s,x)=>s+x.duration,0)<150)insights.push("鏈懆杩愬姩璺濈 150 鍒嗛挓鐨勫熀纭€鐩爣杩樻湁绌洪棿锛屽彲浠ュ畨鎺?2 娆?30 鍒嗛挓鐨勮交杩愬姩銆?);
+        else insights.push("鏈懆杩愬姩鏃堕暱鍏呰冻锛岃寰楃粰韬綋瀹夋帓鎭㈠鍜岀潯鐪犮€?);
+        if(expense>income && income>0)insights.push("鏈懆鏀嚭楂樹簬鏀跺叆锛屽缓璁鐩橀噾棰濇渶楂樼殑娑堣垂鍒嗙被銆?);
+        if(learned<(data.settings.dailyGoal||10)*3)insights.push("鑻辫瀛︿範鍙互浠庢瘡澶╁浐瀹氫竴涓?10 鍒嗛挓鏃舵寮€濮嬶紝闄嶄綆鍚姩鎴愭湰銆?);
+        if(!weekMood.length)insights.push("鏈懆杩樻病鏈夊績鎯呰褰曪紝姣忓ぉ涓€鍙ヨ瘽涔熻兘甯姪浣犵湅瑙佹儏缁彉鍖栥€?);
+        $("#analysisContent").innerHTML=`<div class="analysis-grid">${cards.map(c=>`<div class="analysis-item"><div>${c[0]}</div><b>${c[1]}</b><span>${c[2]}</span></div>`).join("")}</div><div class="insights"><h3>鉁?AI 娲炲療寤鸿</h3><ul>${insights.map(i=>`<li>${i}</li>`).join("")}</ul></div>`;
+        $("#analysisModal").classList.add("open");
+      }
+
+      function exportData() {
+        const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+        const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`浜虹敓绠＄悊绯荤粺澶囦唤_${today()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast("澶囦唤宸插鍑?);
+      }
+      function importData(e) {
+        const file=e.target.files[0];if(!file)return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          try { const parsed=JSON.parse(reader.result); if(!parsed||typeof parsed!=="object")throw new Error(); data=normalizeData(parsed);save();renderAll();toast("鏁版嵁瀵煎叆鎴愬姛");}
+          catch(_){toast("瀵煎叆澶辫触锛氫笉鏄湁鏁堢殑澶囦唤鏂囦欢");}
+          e.target.value="";
+        };
+        reader.readAsText(file);
+      }
+      init();
+    })();
+  </script>
+</body>
+</html>
+
