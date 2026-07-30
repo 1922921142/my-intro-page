@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>人生管理系统</title>
+  <meta name="theme-color" content="#0071e3">
+  <meta name="description" content="集计划、记账、运动、心情、阅读、旅行和英语学习于一体的人生管理工作台">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="人生管理">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -275,6 +284,23 @@
       box-shadow: 0 13px 30px rgba(88,86,214,.35); z-index: 50; transition: .22s;
     }
     .ai-fab:hover { transform: translateY(-3px) scale(1.03); }
+    .install-card {
+      position: fixed; right: 94px; bottom: 24px; z-index: 48;
+      width: min(360px, calc(100vw - 120px)); padding: 13px 14px;
+      display: none; align-items: center; gap: 11px;
+      background: rgba(255,255,255,.96); backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,.95); border-radius: 16px;
+      box-shadow: 0 16px 42px rgba(0,0,0,.15);
+    }
+    .install-card.show { display: flex; animation: enter .28s ease; }
+    .install-icon { width: 42px; height: 42px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,113,227,.22); }
+    .install-copy { flex: 1; min-width: 0; }
+    .install-copy b { display: block; font-size: 13px; }
+    .install-copy small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; line-height: 1.4; }
+    .install-actions { display: flex; gap: 6px; }
+    .install-actions button { border: 0; border-radius: 9px; padding: 8px 10px; font-size: 11px; }
+    .install-now { background: var(--blue); color: white; font-weight: 650; }
+    .install-later { background: #f1f1f5; color: var(--muted); }
     .ai-panel {
       position: fixed; right: 25px; bottom: 92px; width: min(380px, calc(100vw - 28px));
       background: rgba(255,255,255,.96); backdrop-filter: blur(22px); border: 1px solid white;
@@ -354,7 +380,14 @@
       .analysis-grid { grid-template-columns: repeat(2, 1fr); }
       .ai-fab { right: 14px; bottom: 82px; }
       .ai-panel { right: 14px; bottom: 149px; }
+      .install-card { left: 14px; right: 83px; bottom: 82px; width: auto; }
+      .install-copy small { display: none; }
       .toast { left: 50%; bottom: 83px; }
+    }
+    @media (display-mode: standalone) {
+      body { padding-top: env(safe-area-inset-top); }
+      .date-chip { margin-top: env(safe-area-inset-top); }
+      .storage-note { display: none; }
     }
   </style>
 </head>
@@ -596,6 +629,11 @@
     </main>
   </div>
 
+  <div class="install-card" id="installCard">
+    <img class="install-icon" src="./icon-192.png" alt="">
+    <div class="install-copy"><b>安装“人生管理”</b><small>添加到桌面，全屏打开并支持离线启动</small></div>
+    <div class="install-actions"><button class="install-later" id="installLater">稍后</button><button class="install-now" id="installNow">安装</button></div>
+  </div>
   <button class="ai-fab" id="aiFab" aria-label="打开 AI 智能录入">🤖</button>
   <div class="ai-panel" id="aiPanel">
     <div class="ai-head"><div><b>AI 智能录入</b><small>用一句话记录生活</small></div><button class="ai-close" id="aiClose">×</button></div>
@@ -633,6 +671,7 @@
       let data = loadData();
       let charts = {};
       let toastTimer;
+      let deferredInstallPrompt = null;
 
       function loadData() {
         try {
@@ -691,6 +730,9 @@
         $("#moodChoices").innerHTML = moods.map((m,i) => `<label class="mood-choice" title="${m.label}"><input type="radio" name="mood" value="${m.score}" ${i===0?"checked":""}><span>${m.emoji}</span></label>`).join("");
         bindEvents();
         renderAll();
+        setupPWA();
+        const initialModule = location.hash.slice(1);
+        if (["daily","finance","fitness","mood","reading","travel","english"].includes(initialModule)) switchModule(initialModule, false);
       }
 
       function bindEvents() {
@@ -748,13 +790,47 @@
         document.addEventListener("keydown", e => { if (e.key === "Escape") { $("#analysisModal").classList.remove("open"); $("#aiPanel").classList.remove("open"); }});
       }
 
-      function switchModule(id) {
+      function switchModule(id, updateHash = true) {
         $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.target === id));
         $$(".module").forEach(m => m.classList.toggle("active", m.id === id));
+        if (updateHash) history.replaceState(null, "", "#" + id);
         window.scrollTo({top:0});
         if (id === "finance") setTimeout(renderFinanceChart, 40);
         if (id === "mood") setTimeout(renderMoodChart, 40);
         if (id === "english") setTimeout(renderWordChart, 40);
+      }
+
+      function setupPWA() {
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js").catch(() => {});
+          });
+        }
+        const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+        if (standalone) document.body.classList.add("pwa-standalone");
+        const dismissedAt = Number(localStorage.getItem("lifeOSInstallDismissed") || 0);
+        window.addEventListener("beforeinstallprompt", event => {
+          event.preventDefault();
+          deferredInstallPrompt = event;
+          if (Date.now() - dismissedAt > 3 * 86400000) $("#installCard").classList.add("show");
+        });
+        $("#installNow").addEventListener("click", async () => {
+          if (!deferredInstallPrompt) return toast("请在浏览器菜单中选择“添加到主屏幕”");
+          deferredInstallPrompt.prompt();
+          const choice = await deferredInstallPrompt.userChoice;
+          deferredInstallPrompt = null;
+          $("#installCard").classList.remove("show");
+          if (choice.outcome === "accepted") toast("正在安装到桌面");
+        });
+        $("#installLater").addEventListener("click", () => {
+          localStorage.setItem("lifeOSInstallDismissed", String(Date.now()));
+          $("#installCard").classList.remove("show");
+        });
+        window.addEventListener("appinstalled", () => {
+          deferredInstallPrompt = null;
+          $("#installCard").classList.remove("show");
+          toast("已安装到手机桌面");
+        });
       }
 
       function renderAll() {
@@ -997,4 +1073,3 @@
   </script>
 </body>
 </html>
-

@@ -1,0 +1,57 @@
+{
+  "id": "./",
+  "name": "人生管理系统",
+  "short_name": "人生管理",
+  "description": "集计划、记账、运动、心情、阅读、旅行和英语学习于一体的人生管理工作台",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f5f5f7",
+  "theme_color": "#0071e3",
+  "prefer_related_applications": false,
+  "categories": ["productivity", "lifestyle", "finance"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "每日计划",
+      "short_name": "计划",
+      "url": "./#daily",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "快速记账",
+      "short_name": "记账",
+      "url": "./#finance",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "运动打卡",
+      "short_name": "运动",
+      "url": "./#fitness",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
+    }
+  ]
+}
