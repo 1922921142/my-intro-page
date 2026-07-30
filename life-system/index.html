@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>浜虹敓绠＄悊绯荤粺</title>
+  <title>人生管理系统</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -179,7 +179,7 @@
       appearance: none; width: 21px; height: 21px; min-width: 21px; padding: 0;
       border: 2px solid #c7c7cc; border-radius: 7px; background: white; display: grid; place-content: center;
     }
-    .check::after { content: "鉁?; color: white; font-size: 13px; transform: scale(0); transition: .15s; }
+    .check::after { content: "✓"; color: white; font-size: 13px; transform: scale(0); transition: .15s; }
     .check:checked { border-color: var(--green); background: var(--green); }
     .check:checked::after { transform: scale(1); }
     .done .item-title { text-decoration: line-through; color: #a1a1a6; }
@@ -361,84 +361,84 @@
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand"><span class="brand-mark">鈼?/span><span class="brand-text">浜虹敓绠＄悊绯荤粺</span></div>
+      <div class="brand"><span class="brand-mark">◈</span><span class="brand-text">人生管理系统</span></div>
       <nav class="nav">
-        <button class="nav-btn active" data-target="daily"><span class="nav-icon">鉁?/span><span class="nav-text">姣忔棩璁″垝</span></button>
-        <button class="nav-btn" data-target="finance"><span class="nav-icon">楼</span><span class="nav-text">璁拌处鏈?/span></button>
-        <button class="nav-btn" data-target="fitness"><span class="nav-icon">鈼?/span><span class="nav-text">杩愬姩鎵撳崱</span></button>
-        <button class="nav-btn" data-target="mood"><span class="nav-icon">鈽?/span><span class="nav-text">蹇冩儏鏃ヨ</span></button>
-        <button class="nav-btn" data-target="reading"><span class="nav-icon">鈻?/span><span class="nav-text">璇讳功鏀惰幏</span></button>
-        <button class="nav-btn" data-target="travel"><span class="nav-icon">鉁?/span><span class="nav-text">鏃呰璁″垝</span></button>
-        <button class="nav-btn" data-target="english"><span class="nav-icon">A</span><span class="nav-text">鑻辫瀛︿範</span></button>
+        <button class="nav-btn active" data-target="daily"><span class="nav-icon">✓</span><span class="nav-text">每日计划</span></button>
+        <button class="nav-btn" data-target="finance"><span class="nav-icon">¥</span><span class="nav-text">记账本</span></button>
+        <button class="nav-btn" data-target="fitness"><span class="nav-icon">◉</span><span class="nav-text">运动打卡</span></button>
+        <button class="nav-btn" data-target="mood"><span class="nav-icon">☺</span><span class="nav-text">心情日记</span></button>
+        <button class="nav-btn" data-target="reading"><span class="nav-icon">▤</span><span class="nav-text">读书收获</span></button>
+        <button class="nav-btn" data-target="travel"><span class="nav-icon">✈</span><span class="nav-text">旅行计划</span></button>
+        <button class="nav-btn" data-target="english"><span class="nav-icon">A</span><span class="nav-text">英语学习</span></button>
       </nav>
       <div class="sidebar-bottom">
-        <button class="analysis-btn" id="analysisBtn"><span class="nav-icon">鉁?/span><span>鍛ㄥ害鏁版嵁鍒嗘瀽</span></button>
+        <button class="analysis-btn" id="analysisBtn"><span class="nav-icon">✦</span><span>周度数据分析</span></button>
         <div class="backup-row">
-          <button id="exportBtn">瀵煎嚭澶囦唤</button>
-          <button id="importBtn">瀵煎叆鏁版嵁</button>
+          <button id="exportBtn">导出备份</button>
+          <button id="importBtn">导入数据</button>
         </div>
         <input id="importFile" type="file" accept=".json,application/json" hidden>
-        <div class="storage-note">鏁版嵁浠呬繚瀛樺湪姝ゆ祻瑙堝櫒</div>
+        <div class="storage-note">数据仅保存在此浏览器</div>
       </div>
     </aside>
 
     <main>
       <section class="module active" id="daily">
         <div class="page-head">
-          <div><div class="eyebrow">FOCUS TODAY</div><h1>姣忔棩璁″垝</h1><p class="subtitle">鎶婇噸瑕佺殑浜嬫儏锛屾斁杩涙竻鏅扮殑涓€澶┿€?/p></div>
+          <div><div class="eyebrow">FOCUS TODAY</div><h1>每日计划</h1><p class="subtitle">把重要的事情，放进清晰的一天。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">浠婃棩寰呭姙 <span id="todoCount" class="item-meta"></span></h2>
+            <h2 class="card-title">今日待办 <span id="todoCount" class="item-meta"></span></h2>
             <form id="todoForm" class="form-row cols-3">
-              <input id="todoText" required maxlength="80" placeholder="浠婂ぉ鎯冲畬鎴愪粈涔堬紵">
-              <select id="todoPriority"><option value="high">楂樹紭鍏堢骇</option><option value="medium" selected>涓紭鍏堢骇</option><option value="low">浣庝紭鍏堢骇</option></select>
-              <button class="primary" type="submit">娣诲姞寰呭姙</button>
+              <input id="todoText" required maxlength="80" placeholder="今天想完成什么？">
+              <select id="todoPriority"><option value="high">高优先级</option><option value="medium" selected>中优先级</option><option value="low">低优先级</option></select>
+              <button class="primary" type="submit">添加待办</button>
             </form>
             <div id="todoList" class="list" style="margin-top:16px"></div>
           </div>
           <div class="card center">
-            <h2 class="card-title">浠婃棩瀹屾垚鐜?/h2>
-            <div class="ring" id="todoRing" style="--pct:0"><div class="ring-text"><span id="todoRate">0%</span><small>宸插畬鎴?/small></div></div>
-            <p class="subtitle" id="todoEncourage">浠庣涓€浠跺皬浜嬪紑濮嬨€?/p>
+            <h2 class="card-title">今日完成率</h2>
+            <div class="ring" id="todoRing" style="--pct:0"><div class="ring-text"><span id="todoRate">0%</span><small>已完成</small></div></div>
+            <p class="subtitle" id="todoEncourage">从第一件小事开始。</p>
           </div>
         </div>
       </section>
 
       <section class="module" id="finance">
         <div class="page-head">
-          <div><div class="eyebrow">MONEY FLOW</div><h1>璁拌处鏈?/h1><p class="subtitle">浜嗚В姣忎竴绗旈挶鐨勫幓鍚戯紝涔熺湅瑙佺Н绱€?/p></div>
+          <div><div class="eyebrow">MONEY FLOW</div><h1>记账本</h1><p class="subtitle">了解每一笔钱的去向，也看见积累。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="stats">
-          <div class="stat" style="--accent:var(--green)"><span class="stat-label">鏈湀鏀跺叆</span><span class="stat-value" id="monthIncome">楼0.00</span></div>
-          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">鏈湀鏀嚭</span><span class="stat-value" id="monthExpense">楼0.00</span></div>
-          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">鏈湀缁撲綑</span><span class="stat-value" id="monthBalance">楼0.00</span></div>
+          <div class="stat" style="--accent:var(--green)"><span class="stat-label">本月收入</span><span class="stat-value" id="monthIncome">¥0.00</span></div>
+          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">本月支出</span><span class="stat-value" id="monthExpense">¥0.00</span></div>
+          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">本月结余</span><span class="stat-value" id="monthBalance">¥0.00</span></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">璁板綍涓€绗?/h2>
+            <h2 class="card-title">记录一笔</h2>
             <form id="financeForm" class="form-row">
               <div class="type-switch">
-                <label><input type="radio" name="moneyType" value="expense" checked><span>鏀嚭</span></label>
-                <label><input type="radio" name="moneyType" value="income"><span>鏀跺叆</span></label>
+                <label><input type="radio" name="moneyType" value="expense" checked><span>支出</span></label>
+                <label><input type="radio" name="moneyType" value="income"><span>收入</span></label>
               </div>
               <div class="form-row cols-2">
-                <input id="moneyAmount" type="number" min="0.01" step="0.01" required placeholder="閲戦">
+                <input id="moneyAmount" type="number" min="0.01" step="0.01" required placeholder="金额">
                 <select id="moneyCategory"></select>
               </div>
               <div class="form-row cols-2">
-                <input id="moneyNote" maxlength="40" placeholder="澶囨敞锛堝彲閫夛級">
+                <input id="moneyNote" maxlength="40" placeholder="备注（可选）">
                 <input id="moneyDate" type="date" required>
               </div>
-              <button class="primary full" type="submit">淇濆瓨璁板綍</button>
+              <button class="primary full" type="submit">保存记录</button>
             </form>
-            <h2 class="card-title" style="margin-top:22px">鏈€杩戣褰?/h2>
+            <h2 class="card-title" style="margin-top:22px">最近记录</h2>
             <div id="moneyList" class="list"></div>
           </div>
           <div class="card">
-            <h2 class="card-title">鏈湀鏀嚭鍒嗙被</h2>
+            <h2 class="card-title">本月支出分类</h2>
             <div class="chart-wrap"><canvas id="expenseChart"></canvas></div>
           </div>
         </div>
@@ -446,56 +446,56 @@
 
       <section class="module" id="fitness">
         <div class="page-head">
-          <div><div class="eyebrow">KEEP MOVING</div><h1>杩愬姩鎵撳崱</h1><p class="subtitle">姣忎竴娆℃祦姹楋紝閮藉湪涓烘湭鏉ョ殑鑷繁钃勫姏銆?/p></div>
+          <div><div class="eyebrow">KEEP MOVING</div><h1>运动打卡</h1><p class="subtitle">每一次流汗，都在为未来的自己蓄力。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="stats">
-          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">杩炵画鎵撳崱</span><span class="stat-value"><span id="streakDays">0</span><small>澶?/small></span></div>
-          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">鏈懆鏃堕暱</span><span class="stat-value"><span id="weekMinutes">0</span><small>鍒嗛挓</small></span></div>
-          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">鏈懆娑堣€?/span><span class="stat-value"><span id="weekCalories">0</span><small>鍗冨崱</small></span></div>
+          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">连续打卡</span><span class="stat-value"><span id="streakDays">0</span><small>天</small></span></div>
+          <div class="stat" style="--accent:var(--blue)"><span class="stat-label">本周时长</span><span class="stat-value"><span id="weekMinutes">0</span><small>分钟</small></span></div>
+          <div class="stat" style="--accent:var(--pink)"><span class="stat-label">本周消耗</span><span class="stat-value"><span id="weekCalories">0</span><small>千卡</small></span></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">瀹屾垚涓€娆¤繍鍔?/h2>
+            <h2 class="card-title">完成一次运动</h2>
             <form id="fitnessForm" class="form-row">
               <div id="sportChoices" class="sport-grid"></div>
               <div class="form-row cols-2">
-                <input id="sportDuration" type="number" min="1" required placeholder="鏃堕暱锛堝垎閽燂級">
-                <input id="sportCalories" type="number" min="0" required placeholder="娑堣€楋紙鍗冨崱锛?>
+                <input id="sportDuration" type="number" min="1" required placeholder="时长（分钟）">
+                <input id="sportCalories" type="number" min="0" required placeholder="消耗（千卡）">
               </div>
               <input id="sportDate" type="date" required>
-              <button class="primary full" type="submit" style="background:var(--orange)">瀹屾垚鎵撳崱</button>
+              <button class="primary full" type="submit" style="background:var(--orange)">完成打卡</button>
             </form>
-            <h2 class="card-title" style="margin-top:22px">鏈€杩戞墦鍗?/h2>
+            <h2 class="card-title" style="margin-top:22px">最近打卡</h2>
             <div id="fitnessList" class="list"></div>
           </div>
           <div class="card">
-            <h2 class="card-title">鏈懆娲诲姏鍦板浘</h2>
+            <h2 class="card-title">本周活力地图</h2>
             <div id="heatmap" class="heatmap"></div>
-            <p class="subtitle center" style="margin-top:20px">棰滆壊瓒婃繁锛岃繍鍔ㄦ椂闂磋秺闀?/p>
+            <p class="subtitle center" style="margin-top:20px">颜色越深，运动时间越长</p>
           </div>
         </div>
       </section>
 
       <section class="module" id="mood">
         <div class="page-head">
-          <div><div class="eyebrow">INNER WEATHER</div><h1>蹇冩儏鏃ヨ</h1><p class="subtitle">鍏佽鑷繁鎰熷彈锛屼篃缁欐儏缁竴涓嚭鍙ｃ€?/p></div>
+          <div><div class="eyebrow">INNER WEATHER</div><h1>心情日记</h1><p class="subtitle">允许自己感受，也给情绪一个出口。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">璁板綍姝ゅ埢</h2>
+            <h2 class="card-title">记录此刻</h2>
             <form id="moodForm" class="form-row">
               <div id="moodChoices" class="mood-grid"></div>
-              <textarea id="moodText" maxlength="500" placeholder="浠婂ぉ鍙戠敓浜嗕粈涔堬紵鍐欎笅姝ゅ埢鐨勬劅鍙椻€?></textarea>
+              <textarea id="moodText" maxlength="500" placeholder="今天发生了什么？写下此刻的感受…"></textarea>
               <input id="moodDate" type="date" required>
-              <button class="primary full" type="submit" style="background:var(--pink)">淇濆瓨鏃ヨ</button>
+              <button class="primary full" type="submit" style="background:var(--pink)">保存日记</button>
             </form>
-            <h2 class="card-title" style="margin-top:22px">鏃ヨ鐗囨</h2>
+            <h2 class="card-title" style="margin-top:22px">日记片段</h2>
             <div id="moodList" class="list"></div>
           </div>
           <div class="card">
-            <h2 class="card-title">鏈懆蹇冩儏瓒嬪娍</h2>
+            <h2 class="card-title">本周心情趋势</h2>
             <div class="chart-wrap"><canvas id="moodChart"></canvas></div>
           </div>
         </div>
@@ -503,27 +503,27 @@
 
       <section class="module" id="reading">
         <div class="page-head">
-          <div><div class="eyebrow">READ & GROW</div><h1>璇讳功鏀惰幏</h1><p class="subtitle">涓嶅彧璇诲畬涓€鏈功锛屾洿鐣欎笅鐪熸鐨勬€濊€冦€?/p></div>
+          <div><div class="eyebrow">READ & GROW</div><h1>读书收获</h1><p class="subtitle">不只读完一本书，更留下真正的思考。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">娣诲姞涔︾睄</h2>
+            <h2 class="card-title">添加书籍</h2>
             <form id="bookForm" class="form-row">
-              <input id="bookTitle" required maxlength="60" placeholder="涔﹀悕">
+              <input id="bookTitle" required maxlength="60" placeholder="书名">
               <div class="form-row cols-2">
-                <input id="bookAuthor" required maxlength="40" placeholder="浣滆€?>
-                <input id="bookPages" type="number" min="1" required placeholder="鎬婚〉鏁?>
+                <input id="bookAuthor" required maxlength="40" placeholder="作者">
+                <input id="bookPages" type="number" min="1" required placeholder="总页数">
               </div>
-              <button class="primary full" type="submit" style="background:var(--purple)">鍔犲叆涔︽灦</button>
+              <button class="primary full" type="submit" style="background:var(--purple)">加入书架</button>
             </form>
             <div class="stats" style="margin:22px 0 0;grid-template-columns:repeat(2,1fr)">
-              <div class="stat" style="--accent:var(--purple)"><span class="stat-label">涔︽灦钘忎功</span><span class="stat-value"><span id="bookCount">0</span><small>鏈?/small></span></div>
-              <div class="stat" style="--accent:var(--green)"><span class="stat-label">宸茶瀹?/span><span class="stat-value"><span id="finishedBooks">0</span><small>鏈?/small></span></div>
+              <div class="stat" style="--accent:var(--purple)"><span class="stat-label">书架藏书</span><span class="stat-value"><span id="bookCount">0</span><small>本</small></span></div>
+              <div class="stat" style="--accent:var(--green)"><span class="stat-label">已读完</span><span class="stat-value"><span id="finishedBooks">0</span><small>本</small></span></div>
             </div>
           </div>
           <div class="card">
-            <h2 class="card-title">鎴戠殑涔︽灦</h2>
+            <h2 class="card-title">我的书架</h2>
             <div id="bookList" class="list"></div>
           </div>
         </div>
@@ -531,23 +531,23 @@
 
       <section class="module" id="travel">
         <div class="page-head">
-          <div><div class="eyebrow">GO SOMEWHERE</div><h1>鏃呰璁″垝</h1><p class="subtitle">鏈熷緟浠庤鍒掑紑濮嬶紝椋庢櫙鍦ㄨ矾涓婂睍寮€銆?/p></div>
+          <div><div class="eyebrow">GO SOMEWHERE</div><h1>旅行计划</h1><p class="subtitle">期待从计划开始，风景在路上展开。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">鍒涘缓鏃呯▼</h2>
+            <h2 class="card-title">创建旅程</h2>
             <form id="tripForm" class="form-row">
-              <input id="tripDestination" required maxlength="50" placeholder="鐩殑鍦?>
+              <input id="tripDestination" required maxlength="50" placeholder="目的地">
               <div class="form-row cols-2">
                 <input id="tripStart" type="date" required>
                 <input id="tripEnd" type="date" required>
               </div>
-              <button class="primary full" type="submit" style="background:var(--cyan);color:#075b7b">寮€濮嬭鍒?/button>
+              <button class="primary full" type="submit" style="background:var(--cyan);color:#075b7b">开始规划</button>
             </form>
           </div>
           <div class="card">
-            <h2 class="card-title">鎴戠殑鏃呰</h2>
+            <h2 class="card-title">我的旅行</h2>
             <div id="tripList" class="list"></div>
           </div>
         </div>
@@ -555,26 +555,26 @@
 
       <section class="module" id="english">
         <div class="page-head">
-          <div><div class="eyebrow">ONE WORD A DAY</div><h1>鑻辫瀛︿範</h1><p class="subtitle">姣忓ぉ涓€鐐圭偣锛岃璇嶆眹鐪熸鎴愪负浣犵殑琛ㄨ揪銆?/p></div>
+          <div><div class="eyebrow">ONE WORD A DAY</div><h1>英语学习</h1><p class="subtitle">每天一点点，让词汇真正成为你的表达。</p></div>
           <div class="date-chip current-date"></div>
         </div>
         <div class="stats">
-          <div class="stat" style="--accent:var(--indigo)"><span class="stat-label">绱璇嶆眹</span><span class="stat-value"><span id="wordTotal">0</span><small>涓?/small></span></div>
-          <div class="stat" style="--accent:var(--green)"><span class="stat-label">浠婃棩瀛︿範</span><span class="stat-value"><span id="wordToday">0</span><small>涓?/small></span></div>
-          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">寰呭涔?/span><span class="stat-value"><span id="wordReview">0</span><small>涓?/small></span></div>
+          <div class="stat" style="--accent:var(--indigo)"><span class="stat-label">累计词汇</span><span class="stat-value"><span id="wordTotal">0</span><small>个</small></span></div>
+          <div class="stat" style="--accent:var(--green)"><span class="stat-label">今日学习</span><span class="stat-value"><span id="wordToday">0</span><small>个</small></span></div>
+          <div class="stat" style="--accent:var(--orange)"><span class="stat-label">待复习</span><span class="stat-value"><span id="wordReview">0</span><small>个</small></span></div>
         </div>
         <div class="grid grid-2">
           <div class="card">
-            <h2 class="card-title">娣诲姞鍗曡瘝</h2>
+            <h2 class="card-title">添加单词</h2>
             <form id="wordForm" class="form-row">
               <div class="form-row cols-2">
-                <input id="wordEnglish" required maxlength="40" placeholder="鑻辨枃鍗曡瘝">
-                <input id="wordPhonetic" maxlength="60" placeholder="闊虫爣 /f蓹藞net瑟k/">
+                <input id="wordEnglish" required maxlength="40" placeholder="英文单词">
+                <input id="wordPhonetic" maxlength="60" placeholder="音标 /fəˈnetɪk/">
               </div>
-              <input id="wordMeaning" required maxlength="100" placeholder="涓枃閲婁箟">
-              <button class="primary full" type="submit" style="background:var(--indigo)">鍔犲叆璇嶅簱</button>
+              <input id="wordMeaning" required maxlength="100" placeholder="中文释义">
+              <button class="primary full" type="submit" style="background:var(--indigo)">加入词库</button>
             </form>
-            <h2 class="card-title" style="margin-top:22px">姣忔棩鐩爣</h2>
+            <h2 class="card-title" style="margin-top:22px">每日目标</h2>
             <div class="goal-row">
               <input id="dailyGoal" type="number" min="1" max="100" value="10">
               <div class="goal-progress">
@@ -584,29 +584,29 @@
             </div>
           </div>
           <div class="card">
-            <h2 class="card-title">鏈懆瀛︿範瓒嬪娍</h2>
+            <h2 class="card-title">本周学习趋势</h2>
             <div class="chart-wrap"><canvas id="wordChart"></canvas></div>
           </div>
         </div>
         <div class="card" style="margin-top:18px">
-          <h2 class="card-title">鍗曡瘝鍗＄墖 <span class="item-meta">鐐瑰嚮鍗＄墖缈昏浆閲婁箟</span></h2>
+          <h2 class="card-title">单词卡片 <span class="item-meta">点击卡片翻转释义</span></h2>
           <div id="wordList" class="word-area"></div>
         </div>
       </section>
     </main>
   </div>
 
-  <button class="ai-fab" id="aiFab" aria-label="鎵撳紑 AI 鏅鸿兘褰曞叆">馃</button>
+  <button class="ai-fab" id="aiFab" aria-label="打开 AI 智能录入">🤖</button>
   <div class="ai-panel" id="aiPanel">
-    <div class="ai-head"><div><b>AI 鏅鸿兘褰曞叆</b><small>鐢ㄤ竴鍙ヨ瘽璁板綍鐢熸椿</small></div><button class="ai-close" id="aiClose">脳</button></div>
-    <div class="ai-messages" id="aiMessages"><div class="bubble bot">浣犲ソ锛佽瘯璇曞鎴戣鈥滆窇姝?30 鍒嗛挓鈥濃€滆姳浜?50 鍧楀悆鍗堥キ鈥濇垨鈥滀粖澶╁績鎯呭緢濂解€濄€?/div></div>
-    <div class="ai-examples"><button data-example="璺戞 30 鍒嗛挓">璺戞 30 鍒嗛挓</button><button data-example="鑺变簡 50 鍧楀悆鍗堥キ">鑺变簡 50 鍧?/button><button data-example="浠婂ぉ蹇冩儏寰堝ソ">蹇冩儏寰堝ソ</button></div>
-    <form class="ai-input" id="aiForm"><input id="aiText" autocomplete="off" placeholder="鎻忚堪浣犲垰鍒氬仛鐨勪簨鈥?><button>鍙戦€?/button></form>
+    <div class="ai-head"><div><b>AI 智能录入</b><small>用一句话记录生活</small></div><button class="ai-close" id="aiClose">×</button></div>
+    <div class="ai-messages" id="aiMessages"><div class="bubble bot">你好！试试对我说“跑步 30 分钟”“花了 50 块吃午饭”或“今天心情很好”。</div></div>
+    <div class="ai-examples"><button data-example="跑步 30 分钟">跑步 30 分钟</button><button data-example="花了 50 块吃午饭">花了 50 块</button><button data-example="今天心情很好">心情很好</button></div>
+    <form class="ai-input" id="aiForm"><input id="aiText" autocomplete="off" placeholder="描述你刚刚做的事…"><button>发送</button></form>
   </div>
 
   <div class="modal" id="analysisModal">
     <div class="modal-card">
-      <div class="modal-head"><div><div class="eyebrow">WEEKLY REVIEW</div><h2>鏈懆鏁版嵁鍒嗘瀽</h2></div><button class="close-modal" id="closeAnalysis">脳</button></div>
+      <div class="modal-head"><div><div class="eyebrow">WEEKLY REVIEW</div><h2>本周数据分析</h2></div><button class="close-modal" id="closeAnalysis">×</button></div>
       <div id="analysisContent"></div>
     </div>
   </div>
@@ -616,15 +616,15 @@
     (() => {
       "use strict";
       const STORAGE_KEY = "lifeOSData_v1";
-      const categories = ["椁愰ギ","浜ら€?,"璐墿","濞变箰","浣忔埧","鍖荤枟","鏁欒偛","宸ヨ祫","鐞嗚储","鍏朵粬"];
+      const categories = ["餐饮","交通","购物","娱乐","住房","医疗","教育","工资","理财","其他"];
       const sports = [
-        ["璺戞","馃弮"],["娓告吵","馃強"],["鍋ヨ韩","馃弸锔?],["楠戣","馃毚"],
-        ["鐟滀冀","馃"],["绡悆","馃弨"],["璺崇怀","馃"],["鏁ｆ","馃毝"]
+        ["跑步","🏃"],["游泳","🏊"],["健身","🏋️"],["骑行","🚴"],
+        ["瑜伽","🧘"],["篮球","🏀"],["跳绳","🪢"],["散步","🚶"]
       ];
       const moods = [
-        { emoji:"馃槉", score:6, label:"寮€蹇? }, { emoji:"馃檪", score:5, label:"涓嶉敊" },
-        { emoji:"馃槓", score:4, label:"骞抽潤" }, { emoji:"馃檨", score:3, label:"浣庤惤" },
-        { emoji:"馃槩", score:2, label:"闅捐繃" }, { emoji:"馃槨", score:1, label:"鐢熸皵" }
+        { emoji:"😊", score:6, label:"开心" }, { emoji:"🙂", score:5, label:"不错" },
+        { emoji:"😐", score:4, label:"平静" }, { emoji:"🙁", score:3, label:"低落" },
+        { emoji:"😢", score:2, label:"难过" }, { emoji:"😡", score:1, label:"生气" }
       ];
       const blankData = () => ({
         version: 1, todos: [], transactions: [], exercises: [], moods: [], books: [],
@@ -651,7 +651,7 @@
       }
       function save() {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-        catch (_) { toast("瀛樺偍绌洪棿涓嶈冻锛岃鍏堝鍑哄浠?); }
+        catch (_) { toast("存储空间不足，请先导出备份"); }
       }
       const $ = s => document.querySelector(s);
       const $$ = s => [...document.querySelectorAll(s)];
@@ -662,7 +662,7 @@
         return `${y}-${m}-${day}`;
       };
       const today = () => iso(new Date());
-      const money = n => "楼" + Number(n || 0).toLocaleString("zh-CN", {minimumFractionDigits:2, maximumFractionDigits:2});
+      const money = n => "¥" + Number(n || 0).toLocaleString("zh-CN", {minimumFractionDigits:2, maximumFractionDigits:2});
       const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       const dateText = d => new Date(d + "T12:00:00").toLocaleDateString("zh-CN", {month:"short", day:"numeric"});
       const inMonth = d => d && d.slice(0,7) === today().slice(0,7);
@@ -698,39 +698,39 @@
         $("#todoForm").addEventListener("submit", e => {
           e.preventDefault();
           data.todos.unshift({id:uid(), text:$("#todoText").value.trim(), priority:$("#todoPriority").value, done:false, date:today(), createdAt:Date.now()});
-          $("#todoText").value = ""; save(); renderDaily(); toast("寰呭姙宸叉坊鍔?);
+          $("#todoText").value = ""; save(); renderDaily(); toast("待办已添加");
         });
         $("#financeForm").addEventListener("submit", e => {
           e.preventDefault();
           data.transactions.unshift({id:uid(), type:$('input[name="moneyType"]:checked').value, amount:+$("#moneyAmount").value, category:$("#moneyCategory").value, note:$("#moneyNote").value.trim(), date:$("#moneyDate").value});
-          e.target.reset(); $('input[name="moneyType"][value="expense"]').checked = true; $("#moneyDate").value = today(); save(); renderFinance(); toast("璐︾洰宸蹭繚瀛?);
+          e.target.reset(); $('input[name="moneyType"][value="expense"]').checked = true; $("#moneyDate").value = today(); save(); renderFinance(); toast("账目已保存");
         });
         $("#fitnessForm").addEventListener("submit", e => {
           e.preventDefault();
           data.exercises.unshift({id:uid(), type:$('input[name="sport"]:checked').value, duration:+$("#sportDuration").value, calories:+$("#sportCalories").value, date:$("#sportDate").value});
-          $("#sportDuration").value = ""; $("#sportCalories").value = ""; $("#sportDate").value = today(); save(); renderFitness(); toast("杩愬姩鎵撳崱鎴愬姛");
+          $("#sportDuration").value = ""; $("#sportCalories").value = ""; $("#sportDate").value = today(); save(); renderFitness(); toast("运动打卡成功");
         });
         $("#moodForm").addEventListener("submit", e => {
           e.preventDefault();
           const score = +$('input[name="mood"]:checked').value;
           data.moods.unshift({id:uid(), score, emoji:moods.find(m=>m.score===score).emoji, text:$("#moodText").value.trim(), date:$("#moodDate").value});
-          $("#moodText").value = ""; $("#moodDate").value = today(); save(); renderMood(); toast("蹇冩儏宸茶娓╂煍璁板綍");
+          $("#moodText").value = ""; $("#moodDate").value = today(); save(); renderMood(); toast("心情已被温柔记录");
         });
         $("#bookForm").addEventListener("submit", e => {
           e.preventDefault();
           data.books.unshift({id:uid(), title:$("#bookTitle").value.trim(), author:$("#bookAuthor").value.trim(), totalPages:+$("#bookPages").value, currentPage:0, notes:[]});
-          e.target.reset(); save(); renderReading(); toast("涔︾睄宸插姞鍏ヤ功鏋?);
+          e.target.reset(); save(); renderReading(); toast("书籍已加入书架");
         });
         $("#tripForm").addEventListener("submit", e => {
           e.preventDefault();
-          if ($("#tripEnd").value < $("#tripStart").value) return toast("缁撴潫鏃ユ湡涓嶈兘鏃╀簬寮€濮嬫棩鏈?);
+          if ($("#tripEnd").value < $("#tripStart").value) return toast("结束日期不能早于开始日期");
           data.trips.unshift({id:uid(), destination:$("#tripDestination").value.trim(), startDate:$("#tripStart").value, endDate:$("#tripEnd").value, itinerary:[], packing:[]});
-          e.target.reset(); $("#tripStart").value=$("#tripEnd").value=today(); save(); renderTravel(); toast("鏂扮殑鏃呯▼宸插垱寤?);
+          e.target.reset(); $("#tripStart").value=$("#tripEnd").value=today(); save(); renderTravel(); toast("新的旅程已创建");
         });
         $("#wordForm").addEventListener("submit", e => {
           e.preventDefault();
           data.words.unshift({id:uid(), english:$("#wordEnglish").value.trim(), phonetic:$("#wordPhonetic").value.trim(), meaning:$("#wordMeaning").value.trim(), date:today(), reviewed:false});
-          e.target.reset(); save(); renderEnglish(); toast("鏂板崟璇嶅凡鍔犲叆");
+          e.target.reset(); save(); renderEnglish(); toast("新单词已加入");
         });
         $("#dailyGoal").addEventListener("change", e => {
           data.settings.dailyGoal = Math.max(1, Math.min(100, +e.target.value || 10)); save(); renderEnglish();
@@ -764,14 +764,14 @@
       function renderDaily() {
         const items = data.todos.filter(x => x.date === today()).sort((a,b) => Number(a.done)-Number(b.done));
         const done = items.filter(x => x.done).length, pct = items.length ? Math.round(done/items.length*100) : 0;
-        $("#todoCount").textContent = `${done}/${items.length} 宸插畬鎴恅;
+        $("#todoCount").textContent = `${done}/${items.length} 已完成`;
         $("#todoRate").textContent = pct + "%"; $("#todoRing").style.setProperty("--pct",pct);
-        $("#todoEncourage").textContent = pct===100 && items.length ? "浠婂ぉ鐨勮鍒掑叏閮ㄥ畬鎴愶紝鐪熸锛? : pct>=60 ? "杩涘睍寰堝ソ锛岀户缁繚鎸併€? : items.length ? "涓€娆′笓娉ㄤ竴浠朵簨锛屾參鎱㈡潵銆? : "浠庣涓€浠跺皬浜嬪紑濮嬨€?;
+        $("#todoEncourage").textContent = pct===100 && items.length ? "今天的计划全部完成，真棒！" : pct>=60 ? "进展很好，继续保持。" : items.length ? "一次专注一件事，慢慢来。" : "从第一件小事开始。";
         $("#todoList").innerHTML = items.length ? items.map(x => `<div class="list-item ${x.done?"done":""}">
           <input class="check todo-check" type="checkbox" data-id="${x.id}" ${x.done?"checked":""}>
-          <div class="item-main"><div class="item-title">${esc(x.text)}</div><div class="item-meta">浠婂ぉ</div></div>
-          <span class="priority ${x.priority}">${{high:"楂?,medium:"涓?,low:"浣?}[x.priority]}</span>
-          <button class="delete todo-delete" data-id="${x.id}">脳</button></div>`).join("") : empty("鉁?,"浠婂ぉ杩樻病鏈夊緟鍔?);
+          <div class="item-main"><div class="item-title">${esc(x.text)}</div><div class="item-meta">今天</div></div>
+          <span class="priority ${x.priority}">${{high:"高",medium:"中",low:"低"}[x.priority]}</span>
+          <button class="delete todo-delete" data-id="${x.id}">×</button></div>`).join("") : empty("✓","今天还没有待办");
         $$(".todo-check").forEach(el => el.onclick = () => { const x=data.todos.find(t=>t.id===el.dataset.id); if(x)x.done=el.checked; save(); renderDaily(); });
         $$(".todo-delete").forEach(el => el.onclick = () => removeBy("todos",el.dataset.id));
       }
@@ -783,12 +783,12 @@
         $("#monthIncome").textContent=money(income); $("#monthExpense").textContent=money(expense); $("#monthBalance").textContent=money(income-expense);
         const recent = [...data.transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
         $("#moneyList").innerHTML = recent.length ? recent.map(x=>`<div class="list-item">
-          <div style="font-size:21px">${categoryIcon(x.category)}</div><div class="item-main"><div class="item-title">${esc(x.note||x.category)}</div><div class="item-meta">${esc(x.category)} 路 ${dateText(x.date)}</div></div>
-          <b style="color:${x.type==="income"?"var(--green)":"var(--ink)"}">${x.type==="income"?"+":"-"}${money(x.amount)}</b><button class="delete money-delete" data-id="${x.id}">脳</button></div>`).join("") : empty("楼","杩樻病鏈夎处鐩褰?);
+          <div style="font-size:21px">${categoryIcon(x.category)}</div><div class="item-main"><div class="item-title">${esc(x.note||x.category)}</div><div class="item-meta">${esc(x.category)} · ${dateText(x.date)}</div></div>
+          <b style="color:${x.type==="income"?"var(--green)":"var(--ink)"}">${x.type==="income"?"+":"-"}${money(x.amount)}</b><button class="delete money-delete" data-id="${x.id}">×</button></div>`).join("") : empty("¥","还没有账目记录");
         $$(".money-delete").forEach(el=>el.onclick=()=>removeBy("transactions",el.dataset.id));
         if ($("#finance").classList.contains("active")) renderFinanceChart();
       }
-      function categoryIcon(c) { return ({椁愰ギ:"馃崪",浜ら€?"馃殗",璐墿:"馃泹锔?,濞变箰:"馃幀",浣忔埧:"馃彔",鍖荤枟:"馃拪",鏁欒偛:"馃摎",宸ヨ祫:"馃捈",鐞嗚储:"馃搱",鍏朵粬:"馃Ь"})[c]||"馃Ь"; }
+      function categoryIcon(c) { return ({餐饮:"🍜",交通:"🚇",购物:"🛍️",娱乐:"🎬",住房:"🏠",医疗:"💊",教育:"📚",工资:"💼",理财:"📈",其他:"🧾"})[c]||"🧾"; }
       function chartReady() { return typeof Chart !== "undefined"; }
       function renderFinanceChart() {
         if (!chartReady()) return;
@@ -796,7 +796,7 @@
         const sums=categories.map(c=>ex.filter(x=>x.category===c).reduce((s,x)=>s+x.amount,0));
         const labels=categories.filter((_,i)=>sums[i]>0), vals=sums.filter(v=>v>0);
         if(charts.expense) charts.expense.destroy();
-        charts.expense=new Chart($("#expenseChart"),{type:"doughnut",data:{labels:labels.length?labels:["鏆傛棤鏀嚭"],datasets:[{data:vals.length?vals:[1],backgroundColor:vals.length?["#ff9500","#5ac8fa","#ff375f","#af52de","#0071e3","#34c759","#5856d6","#7d7d82","#c7a467","#a1a1a6"]:["#ececf0"],borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:"64%",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,boxWidth:8,padding:14,font:{family:"-apple-system",size:11}}}}}});
+        charts.expense=new Chart($("#expenseChart"),{type:"doughnut",data:{labels:labels.length?labels:["暂无支出"],datasets:[{data:vals.length?vals:[1],backgroundColor:vals.length?["#ff9500","#5ac8fa","#ff375f","#af52de","#0071e3","#34c759","#5856d6","#7d7d82","#c7a467","#a1a1a6"]:["#ececf0"],borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:"64%",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,boxWidth:8,padding:14,font:{family:"-apple-system",size:11}}}}}});
       }
 
       function renderFitness() {
@@ -804,14 +804,14 @@
         $("#weekMinutes").textContent=week.reduce((s,x)=>s+x.duration,0);
         $("#weekCalories").textContent=week.reduce((s,x)=>s+x.calories,0);
         $("#streakDays").textContent=calcStreak();
-        const dates=weekDates(), names=["涓€","浜?,"涓?,"鍥?,"浜?,"鍏?,"鏃?];
+        const dates=weekDates(), names=["一","二","三","四","五","六","日"];
         $("#heatmap").innerHTML=dates.map((d,i)=>{
           const min=data.exercises.filter(x=>x.date===d).reduce((s,x)=>s+x.duration,0);
           const level=min>=60?3:min>=30?2:min>0?1:0;
-          return `<div class="heat-day"><div class="heat-square ${level?"l"+level:""}">${min?min+"鈥?:"路"}</div><div class="heat-label">鍛?{names[i]}</div></div>`;
+          return `<div class="heat-day"><div class="heat-square ${level?"l"+level:""}">${min?min+"′":"·"}</div><div class="heat-label">周${names[i]}</div></div>`;
         }).join("");
         const list=[...data.exercises].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
-        $("#fitnessList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:21px">${sports.find(s=>s[0]===x.type)?.[1]||"馃弲"}</div><div class="item-main"><div class="item-title">${esc(x.type)} 路 ${x.duration} 鍒嗛挓</div><div class="item-meta">${dateText(x.date)} 路 ${x.calories} 鍗冨崱</div></div><button class="delete fitness-delete" data-id="${x.id}">脳</button></div>`).join(""):empty("馃弮","杩堝嚭绗竴姝ワ紝瀹屾垚涓€娆℃墦鍗?);
+        $("#fitnessList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:21px">${sports.find(s=>s[0]===x.type)?.[1]||"🏅"}</div><div class="item-main"><div class="item-title">${esc(x.type)} · ${x.duration} 分钟</div><div class="item-meta">${dateText(x.date)} · ${x.calories} 千卡</div></div><button class="delete fitness-delete" data-id="${x.id}">×</button></div>`).join(""):empty("🏃","迈出第一步，完成一次打卡");
         $$(".fitness-delete").forEach(el=>el.onclick=()=>removeBy("exercises",el.dataset.id));
       }
       function calcStreak() {
@@ -823,7 +823,7 @@
 
       function renderMood() {
         const list=[...data.moods].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
-        $("#moodList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:25px">${x.emoji}</div><div class="item-main"><div class="item-title">${esc(x.text||"璁板綍浜嗗綋涓嬬殑蹇冩儏")}</div><div class="item-meta">${dateText(x.date)}</div></div><button class="delete mood-delete" data-id="${x.id}">脳</button></div>`).join(""):empty("馃槉","鍐欎笅浠婂ぉ鐨勭涓€绡囧績鎯?);
+        $("#moodList").innerHTML=list.length?list.map(x=>`<div class="list-item"><div style="font-size:25px">${x.emoji}</div><div class="item-main"><div class="item-title">${esc(x.text||"记录了当下的心情")}</div><div class="item-meta">${dateText(x.date)}</div></div><button class="delete mood-delete" data-id="${x.id}">×</button></div>`).join(""):empty("😊","写下今天的第一篇心情");
         $$(".mood-delete").forEach(el=>el.onclick=()=>removeBy("moods",el.dataset.id));
         if($("#mood").classList.contains("active"))renderMoodChart();
       }
@@ -831,43 +831,43 @@
         if(!chartReady())return;
         const dates=weekDates(), vals=dates.map(d=>{const ms=data.moods.filter(x=>x.date===d);return ms.length?ms.reduce((s,x)=>s+x.score,0)/ms.length:null});
         if(charts.mood)charts.mood.destroy();
-        charts.mood=new Chart($("#moodChart"),{type:"line",data:{labels:["鍛ㄤ竴","鍛ㄤ簩","鍛ㄤ笁","鍛ㄥ洓","鍛ㄤ簲","鍛ㄥ叚","鍛ㄦ棩"],datasets:[{data:vals,borderColor:"#ff375f",backgroundColor:"rgba(255,55,95,.10)",fill:true,tension:.38,spanGaps:true,pointBackgroundColor:"#fff",pointBorderColor:"#ff375f",pointBorderWidth:2,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:1,max:6,ticks:{stepSize:1,callback:v=>moods.find(m=>m.score===v)?.emoji||""},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"蹇冩儏 "+(moods.find(m=>m.score===Math.round(c.raw))?.emoji||"")}}}}});
+        charts.mood=new Chart($("#moodChart"),{type:"line",data:{labels:["周一","周二","周三","周四","周五","周六","周日"],datasets:[{data:vals,borderColor:"#ff375f",backgroundColor:"rgba(255,55,95,.10)",fill:true,tension:.38,spanGaps:true,pointBackgroundColor:"#fff",pointBorderColor:"#ff375f",pointBorderWidth:2,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:1,max:6,ticks:{stepSize:1,callback:v=>moods.find(m=>m.score===v)?.emoji||""},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"心情 "+(moods.find(m=>m.score===Math.round(c.raw))?.emoji||"")}}}}});
       }
 
       function renderReading() {
         $("#bookCount").textContent=data.books.length; $("#finishedBooks").textContent=data.books.filter(x=>x.currentPage>=x.totalPages).length;
         $("#bookList").innerHTML=data.books.length?data.books.map(b=>{
           const pct=Math.min(100,Math.round(b.currentPage/b.totalPages*100));
-          return `<div class="book-card"><div class="book-head"><div><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)} 路 ${b.currentPage}/${b.totalPages} 椤?/div></div><button class="delete book-delete" data-id="${b.id}">脳</button></div>
+          return `<div class="book-card"><div class="book-head"><div><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)} · ${b.currentPage}/${b.totalPages} 页</div></div><button class="delete book-delete" data-id="${b.id}">×</button></div>
             <div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--purple),var(--pink))"></div></div><strong>${pct}%</strong></div>
-            <div class="inline-controls"><input type="number" class="book-page" data-id="${b.id}" min="0" max="${b.totalPages}" value="${b.currentPage}" aria-label="褰撳墠椤垫暟"><button class="soft-btn update-page" data-id="${b.id}">鏇存柊杩涘害</button></div>
-            <div class="inline-controls"><input class="book-note" data-id="${b.id}" maxlength="160" placeholder="鍐欎竴鍙ヨ涔︾瑪璁扳€?><button class="soft-btn add-note" data-id="${b.id}" style="color:var(--purple);background:#f7effb">娣诲姞</button></div>
+            <div class="inline-controls"><input type="number" class="book-page" data-id="${b.id}" min="0" max="${b.totalPages}" value="${b.currentPage}" aria-label="当前页数"><button class="soft-btn update-page" data-id="${b.id}">更新进度</button></div>
+            <div class="inline-controls"><input class="book-note" data-id="${b.id}" maxlength="160" placeholder="写一句读书笔记…"><button class="soft-btn add-note" data-id="${b.id}" style="color:var(--purple);background:#f7effb">添加</button></div>
             <div class="notes">${(b.notes||[]).slice(0,3).map(n=>`<div class="note">${esc(n.text)}<div class="item-meta">${dateText(n.date)}</div></div>`).join("")}</div></div>`;
-        }).join(""):empty("馃摉","涔︽灦杩樻槸绌虹殑锛屽姞鍏ヤ竴鏈兂璇荤殑涔?);
+        }).join(""):empty("📖","书架还是空的，加入一本想读的书");
         $$(".book-delete").forEach(el=>el.onclick=()=>removeBy("books",el.dataset.id));
         $$(".update-page").forEach(el=>el.onclick=()=>{
           const b=data.books.find(x=>x.id===el.dataset.id), input=$(`.book-page[data-id="${el.dataset.id}"]`);
           const old=b.currentPage, next=Math.max(0,Math.min(b.totalPages,+input.value||0)); b.currentPage=next;
           if(next>old)data.readingLogs.push({id:uid(),bookId:b.id,pages:next-old,date:today()});
-          save();renderReading();toast("闃呰杩涘害宸叉洿鏂?);
+          save();renderReading();toast("阅读进度已更新");
         });
         $$(".add-note").forEach(el=>el.onclick=()=>{
           const b=data.books.find(x=>x.id===el.dataset.id), input=$(`.book-note[data-id="${el.dataset.id}"]`);
-          if(!input.value.trim())return; b.notes=b.notes||[];b.notes.unshift({id:uid(),text:input.value.trim(),date:today()});save();renderReading();toast("璇讳功绗旇宸蹭繚瀛?);
+          if(!input.value.trim())return; b.notes=b.notes||[];b.notes.unshift({id:uid(),text:input.value.trim(),date:today()});save();renderReading();toast("读书笔记已保存");
         });
       }
 
       function renderTravel() {
         $("#tripList").innerHTML=data.trips.length?data.trips.map(t=>`<div class="trip-card">
-          <div class="trip-head"><div><div class="trip-title">鉁堬笍 ${esc(t.destination)}</div><div class="trip-date">${dateText(t.startDate)} 鈥?${dateText(t.endDate)}</div></div><button class="delete trip-delete" data-id="${t.id}">脳</button></div>
-          <div class="trip-panels"><div><div class="mini-title">琛岀▼瀹夋帓</div>
-            ${(t.itinerary||[]).map(i=>`<div class="mini-item"><span style="color:var(--blue)">${esc(i.time||"瀹夋帓")}</span><span>${esc(i.text)}</span><button class="delete sub-delete" data-kind="itinerary" data-trip="${t.id}" data-id="${i.id}">脳</button></div>`).join("")}
-            <div class="inline-controls"><input class="trip-schedule" data-id="${t.id}" placeholder="濡傦細09:00 鍙傝鍗氱墿棣?><button class="soft-btn add-schedule" data-id="${t.id}">娣诲姞</button></div></div>
-          <div><div class="mini-title">鎵撳寘娓呭崟</div>
-            ${(t.packing||[]).map(i=>`<div class="mini-item ${i.done?"done":""}"><input class="check pack-check" type="checkbox" data-trip="${t.id}" data-id="${i.id}" ${i.done?"checked":""}><span class="item-title" style="flex:1">${esc(i.text)}</span><button class="delete sub-delete" data-kind="packing" data-trip="${t.id}" data-id="${i.id}">脳</button></div>`).join("")}
-            <div class="inline-controls"><input class="trip-pack" data-id="${t.id}" placeholder="娣诲姞瑕佸甫鐨勭墿鍝?><button class="soft-btn add-pack" data-id="${t.id}">娣诲姞</button></div></div></div></div>`).join(""):empty("馃С","鍒涘缓涓€娈靛€煎緱鏈熷緟鐨勬梾绋?);
+          <div class="trip-head"><div><div class="trip-title">✈️ ${esc(t.destination)}</div><div class="trip-date">${dateText(t.startDate)} — ${dateText(t.endDate)}</div></div><button class="delete trip-delete" data-id="${t.id}">×</button></div>
+          <div class="trip-panels"><div><div class="mini-title">行程安排</div>
+            ${(t.itinerary||[]).map(i=>`<div class="mini-item"><span style="color:var(--blue)">${esc(i.time||"安排")}</span><span>${esc(i.text)}</span><button class="delete sub-delete" data-kind="itinerary" data-trip="${t.id}" data-id="${i.id}">×</button></div>`).join("")}
+            <div class="inline-controls"><input class="trip-schedule" data-id="${t.id}" placeholder="如：09:00 参观博物馆"><button class="soft-btn add-schedule" data-id="${t.id}">添加</button></div></div>
+          <div><div class="mini-title">打包清单</div>
+            ${(t.packing||[]).map(i=>`<div class="mini-item ${i.done?"done":""}"><input class="check pack-check" type="checkbox" data-trip="${t.id}" data-id="${i.id}" ${i.done?"checked":""}><span class="item-title" style="flex:1">${esc(i.text)}</span><button class="delete sub-delete" data-kind="packing" data-trip="${t.id}" data-id="${i.id}">×</button></div>`).join("")}
+            <div class="inline-controls"><input class="trip-pack" data-id="${t.id}" placeholder="添加要带的物品"><button class="soft-btn add-pack" data-id="${t.id}">添加</button></div></div></div></div>`).join(""):empty("🧳","创建一段值得期待的旅程");
         $$(".trip-delete").forEach(el=>el.onclick=()=>removeBy("trips",el.dataset.id));
-        $$(".add-schedule").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.id),input=$(`.trip-schedule[data-id="${el.dataset.id}"]`);if(!input.value.trim())return;const val=input.value.trim(),m=val.match(/^(\d{1,2}[:锛歖\d{2})\s*(.*)$/);t.itinerary.push({id:uid(),time:m?m[1].replace("锛?,":"):"瀹夋帓",text:m?m[2]:val});save();renderTravel();});
+        $$(".add-schedule").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.id),input=$(`.trip-schedule[data-id="${el.dataset.id}"]`);if(!input.value.trim())return;const val=input.value.trim(),m=val.match(/^(\d{1,2}[:：]\d{2})\s*(.*)$/);t.itinerary.push({id:uid(),time:m?m[1].replace("：",":"):"安排",text:m?m[2]:val});save();renderTravel();});
         $$(".add-pack").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.id),input=$(`.trip-pack[data-id="${el.dataset.id}"]`);if(!input.value.trim())return;t.packing.push({id:uid(),text:input.value.trim(),done:false});save();renderTravel();});
         $$(".pack-check").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.trip),i=t.packing.find(x=>x.id===el.dataset.id);i.done=el.checked;save();renderTravel();});
         $$(".sub-delete").forEach(el=>el.onclick=()=>{const t=data.trips.find(x=>x.id===el.dataset.trip);t[el.dataset.kind]=t[el.dataset.kind].filter(x=>x.id!==el.dataset.id);save();renderTravel();});
@@ -876,10 +876,10 @@
       function renderEnglish() {
         const todayWords=data.words.filter(x=>x.date===today()).length, goal=+data.settings.dailyGoal||10;
         $("#wordTotal").textContent=data.words.length;$("#wordToday").textContent=todayWords;$("#wordReview").textContent=data.words.filter(x=>!x.reviewed&&x.date!==today()).length;
-        $("#dailyGoal").value=goal;$("#goalFill").style.width=Math.min(100,todayWords/goal*100)+"%";$("#goalText").textContent=`浠婃棩 ${todayWords}/${goal} 涓?{todayWords>=goal?" 路 宸茶揪鎴愮洰鏍?:""}`;
+        $("#dailyGoal").value=goal;$("#goalFill").style.width=Math.min(100,todayWords/goal*100)+"%";$("#goalText").textContent=`今日 ${todayWords}/${goal} 个${todayWords>=goal?" · 已达成目标":""}`;
         $("#wordList").innerHTML=data.words.length?data.words.map(w=>`<div class="word-card" data-id="${w.id}">
-          <div class="word-inner"><div class="word-face front"><div class="word-actions"><button class="delete word-delete" data-id="${w.id}">脳</button></div><div class="word-en">${esc(w.english)}</div><div class="word-ph">${esc(w.phonetic||"")}</div><div class="word-hint">鐐瑰嚮鏌ョ湅閲婁箟</div></div>
-          <div class="word-face back"><div class="word-cn">${esc(w.meaning)}</div><button class="soft-btn word-review" data-id="${w.id}" style="margin-top:12px;padding:6px 10px">${w.reviewed?"宸插涔?鉁?:"鏍囪宸插涔?}</button></div></div></div>`).join(""):empty("A","娣诲姞绗竴涓兂璁颁綇鐨勫崟璇?);
+          <div class="word-inner"><div class="word-face front"><div class="word-actions"><button class="delete word-delete" data-id="${w.id}">×</button></div><div class="word-en">${esc(w.english)}</div><div class="word-ph">${esc(w.phonetic||"")}</div><div class="word-hint">点击查看释义</div></div>
+          <div class="word-face back"><div class="word-cn">${esc(w.meaning)}</div><button class="soft-btn word-review" data-id="${w.id}" style="margin-top:12px;padding:6px 10px">${w.reviewed?"已复习 ✓":"标记已复习"}</button></div></div></div>`).join(""):empty("A","添加第一个想记住的单词");
         $$(".word-card").forEach(el=>el.onclick=e=>{if(!e.target.closest("button"))el.classList.toggle("flipped");});
         $$(".word-delete").forEach(el=>el.onclick=e=>{e.stopPropagation();removeBy("words",el.dataset.id);});
         $$(".word-review").forEach(el=>el.onclick=e=>{e.stopPropagation();const w=data.words.find(x=>x.id===el.dataset.id);w.reviewed=!w.reviewed;save();renderEnglish();});
@@ -889,7 +889,7 @@
         if(!chartReady())return;
         const vals=weekDates().map(d=>data.words.filter(x=>x.date===d).length);
         if(charts.word)charts.word.destroy();
-        charts.word=new Chart($("#wordChart"),{type:"bar",data:{labels:["鍛ㄤ竴","鍛ㄤ簩","鍛ㄤ笁","鍛ㄥ洓","鍛ㄤ簲","鍛ㄥ叚","鍛ㄦ棩"],datasets:[{data:vals,backgroundColor:["#d9d9ff","#c9c8ff","#aaa9f7","#8c8aec","#7775e7","#6866de","#5856d6"],borderRadius:7,borderSkipped:false,maxBarThickness:34}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+        charts.word=new Chart($("#wordChart"),{type:"bar",data:{labels:["周一","周二","周三","周四","周五","周六","周日"],datasets:[{data:vals,backgroundColor:["#d9d9ff","#c9c8ff","#aaa9f7","#8c8aec","#7775e7","#6866de","#5856d6"],borderRadius:7,borderSkipped:false,maxBarThickness:34}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:"#eeeef2"}},x:{grid:{display:false}}},plugins:{legend:{display:false}}}});
       }
 
       function addBubble(text,type) {
@@ -898,54 +898,54 @@
       function aiRecord(text) {
         addBubble(text,"user");
         const normalized=text.replace(/\s+/g,"");
-        const amount=+(normalized.match(/(\d+(?:\.\d+)?)\s*(?:鍏億鍧梶鍧楅挶)/)?.[1]||0);
+        const amount=+(normalized.match(/(\d+(?:\.\d+)?)\s*(?:元|块|块钱)/)?.[1]||0);
         const sport=sports.find(s=>normalized.includes(s[0]));
         if(sport){
-          let duration=+(normalized.match(/(\d+(?:\.\d+)?)\s*(灏忔椂|鍒嗛挓|鍒?/)?.[1]||30);
-          if(normalized.match(/灏忔椂/))duration*=60;
-          const calories=+(normalized.match(/(\d+)\s*(?:鍗冨崱|鍗¤矾閲寍澶у崱)/)?.[1]||Math.round(duration*({璺戞:9,娓告吵:8,鍋ヨ韩:7,楠戣:7,鐟滀冀:3,绡悆:8,璺崇怀:10,鏁ｆ:3}[sport[0]]||6)));
+          let duration=+(normalized.match(/(\d+(?:\.\d+)?)\s*(小时|分钟|分)/)?.[1]||30);
+          if(normalized.match(/小时/))duration*=60;
+          const calories=+(normalized.match(/(\d+)\s*(?:千卡|卡路里|大卡)/)?.[1]||Math.round(duration*({跑步:9,游泳:8,健身:7,骑行:7,瑜伽:3,篮球:8,跳绳:10,散步:3}[sport[0]]||6)));
           data.exercises.unshift({id:uid(),type:sport[0],duration:Math.round(duration),calories,date:today()});save();renderFitness();
-          addBubble(`宸茶褰曪細${sport[0]} ${Math.round(duration)} 鍒嗛挓锛岀害娑堣€?${calories} 鍗冨崱銆俙,"bot");return;
+          addBubble(`已记录：${sport[0]} ${Math.round(duration)} 分钟，约消耗 ${calories} 千卡。`,"bot");return;
         }
-        if(amount && /(鑺变簡|娑堣垂|鏀嚭|涔皘浠樹簡|浠樻|鐢ㄤ簡)/.test(normalized)){
+        if(amount && /(花了|消费|支出|买|付了|付款|用了)/.test(normalized)){
           const c=guessCategory(normalized);data.transactions.unshift({id:uid(),type:"expense",amount,category:c,note:text,date:today()});save();renderFinance();
-          addBubble(`宸茶涓烘敮鍑猴細${money(amount)} 路 ${c}銆俙,"bot");return;
+          addBubble(`已记为支出：${money(amount)} · ${c}。`,"bot");return;
         }
-        if(amount && /(鏀跺叆|宸ヨ祫|璧氫簡|鍒拌处|濂栭噾|鏀跺埌)/.test(normalized)){
-          const c=normalized.includes("宸ヨ祫")?"宸ヨ祫":"鍏朵粬";data.transactions.unshift({id:uid(),type:"income",amount,category:c,note:text,date:today()});save();renderFinance();
-          addBubble(`宸茶涓烘敹鍏ワ細${money(amount)} 路 ${c}銆俙,"bot");return;
+        if(amount && /(收入|工资|赚了|到账|奖金|收到)/.test(normalized)){
+          const c=normalized.includes("工资")?"工资":"其他";data.transactions.unshift({id:uid(),type:"income",amount,category:c,note:text,date:today()});save();renderFinance();
+          addBubble(`已记为收入：${money(amount)} · ${c}。`,"bot");return;
         }
         const moodResult=guessMood(normalized);
         if(moodResult){
           data.moods.unshift({id:uid(),score:moodResult.score,emoji:moodResult.emoji,text,date:today()});save();renderMood();
-          addBubble(`宸茶褰曚粖澶╃殑蹇冩儏 ${moodResult.emoji}锛屼篃璇峰ソ濂界収椤炬鍒荤殑鑷繁銆俙,"bot");return;
+          addBubble(`已记录今天的心情 ${moodResult.emoji}，也请好好照顾此刻的自己。`,"bot");return;
         }
-        if(/(寰呭姙|鎻愰啋鎴憒璁板緱|闇€瑕亅瑕佸幓|瑕佸仛)/.test(normalized)){
-          const task=text.replace(/^(寰呭姙[锛?]?|鎻愰啋鎴憒璁板緱|闇€瑕亅鎴戣|瑕?/,"").trim()||text;
-          const p=/(绱ф€閲嶈|鍔″繀)/.test(normalized)?"high":/(鏈夌┖|涓嶆€?/.test(normalized)?"low":"medium";
+        if(/(待办|提醒我|记得|需要|要去|要做)/.test(normalized)){
+          const task=text.replace(/^(待办[：:]?|提醒我|记得|需要|我要|要)/,"").trim()||text;
+          const p=/(紧急|重要|务必)/.test(normalized)?"high":/(有空|不急)/.test(normalized)?"low":"medium";
           data.todos.unshift({id:uid(),text:task,priority:p,done:false,date:today(),createdAt:Date.now()});save();renderDaily();
-          addBubble(`宸叉坊鍔犱粖鏃ュ緟鍔烇細${task}`,"bot");return;
+          addBubble(`已添加今日待办：${task}`,"bot");return;
         }
-        addBubble("鎴戣繕娌″畬鍏ㄥ惉鎳傘€傚彲浠ヨ鈥滆窇姝?30 鍒嗛挓鈥濃€滆姳浜?50 鍧楀悆楗€濃€滃伐璧勫埌璐?8000鈥濇垨鈥滀粖澶╂湁鐐归毦杩団€濄€?,"bot");
+        addBubble("我还没完全听懂。可以说“跑步 30 分钟”“花了 50 块吃饭”“工资到账 8000”或“今天有点难过”。","bot");
       }
       function guessCategory(t) {
-        if(/楗瓅椁恷濂惰尪|鍜栧暋|姘存灉|鑿渱澶栧崠/.test(t))return"椁愰ギ";
-        if(/杞鍦伴搧|鍏氦|鎵撹溅|娌硅垂|鏈虹エ/.test(t))return"浜ら€?;
-        if(/鎴跨|鐗╀笟|姘寸數|浣忔埧/.test(t))return"浣忔埧";
-        if(/鑽瘄鍖婚櫌|鐪嬬梾|浣撴/.test(t))return"鍖荤枟";
-        if(/璇緗鍩硅|涔瀛︿範/.test(t))return"鏁欒偛";
-        if(/鐢靛奖|娓告垙|婕斿嚭|濞变箰/.test(t))return"濞变箰";
-        if(/鍩洪噾|鑲＄エ|鐞嗚储/.test(t))return"鐞嗚储";
-        if(/涔皘璐墿|琛ｆ湇|闉媩鍖?.test(t))return"璐墿";
-        return"鍏朵粬";
+        if(/饭|餐|奶茶|咖啡|水果|菜|外卖/.test(t))return"餐饮";
+        if(/车|地铁|公交|打车|油费|机票/.test(t))return"交通";
+        if(/房租|物业|水电|住房/.test(t))return"住房";
+        if(/药|医院|看病|体检/.test(t))return"医疗";
+        if(/课|培训|书|学习/.test(t))return"教育";
+        if(/电影|游戏|演出|娱乐/.test(t))return"娱乐";
+        if(/基金|股票|理财/.test(t))return"理财";
+        if(/买|购物|衣服|鞋|包/.test(t))return"购物";
+        return"其他";
       }
       function guessMood(t) {
-        if(/寮€蹇億寰堝ソ|楂樺叴|骞哥|瓒呮|鎰夊揩|蹇箰/.test(t))return moods[0];
-        if(/涓嶉敊|杩樺ソ|杞绘澗|婊¤冻/.test(t))return moods[1];
-        if(/骞抽潤|涓€鑸瑋鏅€殀娌℃劅瑙?.test(t))return moods[2];
-        if(/浣庤惤|閮侀椃|涓嶅ソ|鐑︽伡|鐤叉儷|绱?.test(t))return moods[3];
-        if(/闅捐繃|浼ゅ績|鎯冲摥|鎮蹭激/.test(t))return moods[4];
-        if(/鐢熸皵|鎰ゆ€抾鐏ぇ|鎭肩伀/.test(t))return moods[5];
+        if(/开心|很好|高兴|幸福|超棒|愉快|快乐/.test(t))return moods[0];
+        if(/不错|还好|轻松|满足/.test(t))return moods[1];
+        if(/平静|一般|普通|没感觉/.test(t))return moods[2];
+        if(/低落|郁闷|不好|烦恼|疲惫|累/.test(t))return moods[3];
+        if(/难过|伤心|想哭|悲伤/.test(t))return moods[4];
+        if(/生气|愤怒|火大|恼火/.test(t))return moods[5];
         return null;
       }
 
@@ -955,39 +955,39 @@
         const pages=data.readingLogs.filter(x=>inWeek(x.date)).reduce((s,x)=>s+x.pages,0);
         const notes=data.books.reduce((s,b)=>s+(b.notes||[]).filter(n=>inWeek(n.date)).length,0);
         const packing=data.trips.flatMap(t=>t.packing||[]), learned=data.words.filter(x=>inWeek(x.date)).length;
-        const moodAvg=weekMood.length?(weekMood.reduce((s,x)=>s+x.score,0)/weekMood.length).toFixed(1):"鈥?;
+        const moodAvg=weekMood.length?(weekMood.reduce((s,x)=>s+x.score,0)/weekMood.length).toFixed(1):"—";
         const income=weekMoney.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0), expense=weekMoney.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
         const cards=[
-          ["鉁?,"姣忔棩璁″垝",`${weekTodos.filter(x=>x.done).length}/${weekTodos.length} 椤瑰畬鎴恅],
-          ["楼","璁拌处鏈?,`鏀跺叆 ${money(income)} 路 鏀嚭 ${money(expense)}`],
-          ["馃弮","杩愬姩鎵撳崱",`${new Set(weekEx.map(x=>x.date)).size} 澶?路 ${weekEx.reduce((s,x)=>s+x.duration,0)} 鍒嗛挓`],
-          ["馃槉","蹇冩儏鏃ヨ",`${weekMood.length} 娆¤褰?路 鍧囧€?${moodAvg}/6`],
-          ["馃摉","璇讳功鏀惰幏",`闃呰 ${pages} 椤?路 ${notes} 鏉＄瑪璁癭],
-          ["鉁堬笍","鏃呰璁″垝",`${data.trips.filter(t=>t.endDate>=today()).length} 涓緟鍑哄彂 路 娓呭崟 ${packing.filter(x=>x.done).length}/${packing.length}`],
-          ["A","鑻辫瀛︿範",`鏂板 ${learned} 涓?路 绱 ${data.words.length} 涓猔]
+          ["✓","每日计划",`${weekTodos.filter(x=>x.done).length}/${weekTodos.length} 项完成`],
+          ["¥","记账本",`收入 ${money(income)} · 支出 ${money(expense)}`],
+          ["🏃","运动打卡",`${new Set(weekEx.map(x=>x.date)).size} 天 · ${weekEx.reduce((s,x)=>s+x.duration,0)} 分钟`],
+          ["😊","心情日记",`${weekMood.length} 次记录 · 均值 ${moodAvg}/6`],
+          ["📖","读书收获",`阅读 ${pages} 页 · ${notes} 条笔记`],
+          ["✈️","旅行计划",`${data.trips.filter(t=>t.endDate>=today()).length} 个待出发 · 清单 ${packing.filter(x=>x.done).length}/${packing.length}`],
+          ["A","英语学习",`新学 ${learned} 个 · 累计 ${data.words.length} 个`]
         ];
         const insights=[];
-        if(weekTodos.length && weekTodos.filter(x=>x.done).length/weekTodos.length>=.75)insights.push("鏈懆璁″垝瀹屾垚搴﹀緢绋筹紝寤鸿涓嬪懆缁х画淇濇寔姣忓ぉ 3 浠舵牳蹇冧换鍔＄殑鑺傚銆?);
-        else insights.push("鎶婃瘡鏃ヨ鍒掔缉鍑忎负灏戣€屾槑纭殑閲嶇偣锛岄€氬父姣斿垪寰堥暱鐨勬竻鍗曟洿瀹规槗瀹屾垚銆?);
-        if(weekEx.reduce((s,x)=>s+x.duration,0)<150)insights.push("鏈懆杩愬姩璺濈 150 鍒嗛挓鐨勫熀纭€鐩爣杩樻湁绌洪棿锛屽彲浠ュ畨鎺?2 娆?30 鍒嗛挓鐨勮交杩愬姩銆?);
-        else insights.push("鏈懆杩愬姩鏃堕暱鍏呰冻锛岃寰楃粰韬綋瀹夋帓鎭㈠鍜岀潯鐪犮€?);
-        if(expense>income && income>0)insights.push("鏈懆鏀嚭楂樹簬鏀跺叆锛屽缓璁鐩橀噾棰濇渶楂樼殑娑堣垂鍒嗙被銆?);
-        if(learned<(data.settings.dailyGoal||10)*3)insights.push("鑻辫瀛︿範鍙互浠庢瘡澶╁浐瀹氫竴涓?10 鍒嗛挓鏃舵寮€濮嬶紝闄嶄綆鍚姩鎴愭湰銆?);
-        if(!weekMood.length)insights.push("鏈懆杩樻病鏈夊績鎯呰褰曪紝姣忓ぉ涓€鍙ヨ瘽涔熻兘甯姪浣犵湅瑙佹儏缁彉鍖栥€?);
-        $("#analysisContent").innerHTML=`<div class="analysis-grid">${cards.map(c=>`<div class="analysis-item"><div>${c[0]}</div><b>${c[1]}</b><span>${c[2]}</span></div>`).join("")}</div><div class="insights"><h3>鉁?AI 娲炲療寤鸿</h3><ul>${insights.map(i=>`<li>${i}</li>`).join("")}</ul></div>`;
+        if(weekTodos.length && weekTodos.filter(x=>x.done).length/weekTodos.length>=.75)insights.push("本周计划完成度很稳，建议下周继续保持每天 3 件核心任务的节奏。");
+        else insights.push("把每日计划缩减为少而明确的重点，通常比列很长的清单更容易完成。");
+        if(weekEx.reduce((s,x)=>s+x.duration,0)<150)insights.push("本周运动距离 150 分钟的基础目标还有空间，可以安排 2 次 30 分钟的轻运动。");
+        else insights.push("本周运动时长充足，记得给身体安排恢复和睡眠。");
+        if(expense>income && income>0)insights.push("本周支出高于收入，建议复盘金额最高的消费分类。");
+        if(learned<(data.settings.dailyGoal||10)*3)insights.push("英语学习可以从每天固定一个 10 分钟时段开始，降低启动成本。");
+        if(!weekMood.length)insights.push("本周还没有心情记录，每天一句话也能帮助你看见情绪变化。");
+        $("#analysisContent").innerHTML=`<div class="analysis-grid">${cards.map(c=>`<div class="analysis-item"><div>${c[0]}</div><b>${c[1]}</b><span>${c[2]}</span></div>`).join("")}</div><div class="insights"><h3>✦ AI 洞察建议</h3><ul>${insights.map(i=>`<li>${i}</li>`).join("")}</ul></div>`;
         $("#analysisModal").classList.add("open");
       }
 
       function exportData() {
         const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-        const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`浜虹敓绠＄悊绯荤粺澶囦唤_${today()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast("澶囦唤宸插鍑?);
+        const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`人生管理系统备份_${today()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast("备份已导出");
       }
       function importData(e) {
         const file=e.target.files[0];if(!file)return;
         const reader=new FileReader();
         reader.onload=()=>{
-          try { const parsed=JSON.parse(reader.result); if(!parsed||typeof parsed!=="object")throw new Error(); data=normalizeData(parsed);save();renderAll();toast("鏁版嵁瀵煎叆鎴愬姛");}
-          catch(_){toast("瀵煎叆澶辫触锛氫笉鏄湁鏁堢殑澶囦唤鏂囦欢");}
+          try { const parsed=JSON.parse(reader.result); if(!parsed||typeof parsed!=="object")throw new Error(); data=normalizeData(parsed);save();renderAll();toast("数据导入成功");}
+          catch(_){toast("导入失败：不是有效的备份文件");}
           e.target.value="";
         };
         reader.readAsText(file);
