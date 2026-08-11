@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="小红书内容生产员 Agent 1.1 的公开交互演示站。使用脱敏预置数据，不连接 API、飞书或真实业务数据。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <title>小红书内容生产员 Agent 1.1｜公开演示</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="返回首页">
+      <span class="brand-mark" aria-hidden="true">小</span>
+      <span><strong>内容生产员</strong><small>Agent 1.1</small></span>
+    </a>
+    <nav aria-label="主导航">
+      <a href="#demo">体验演示</a>
+      <a href="#standards">成稿规范</a>
+      <a href="#boundaries">能力边界</a>
+      <a href="#evidence">真实证据</a>
+    </nav>
+    <span class="status-pill"><i></i> 静态演示</span>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">XIAOHONGSHU CONTENT WORKFLOW</p>
+        <h1>把10篇参考文案，变成<br><em>可检查、可确认</em>的内容方案</h1>
+        <p class="hero-lead">自动完成资料读取、用户与场景分析、候选选题、完整文案和质量检查。产品事实与分析建议始终分开，两次人工确认后才允许进入下一步。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#demo">体验预置演示 <span aria-hidden="true">→</span></a>
+          <a class="button secondary" href="#boundaries">先看能力边界</a>
+        </div>
+        <ul class="trust-list" aria-label="隐私保护">
+          <li><span>✓</span> 不连接 API</li>
+          <li><span>✓</span> 不上传数据</li>
+          <li><span>✓</span> 不可调用真实 Agent</li>
+        </ul>
+      </div>
+      <div class="hero-console" aria-label="Agent 流程摘要">
+        <div class="console-top"><span></span><span></span><span></span><b>agent-run / demo</b></div>
+        <div class="console-body">
+          <p><span class="prompt">›</span> 启动单产品内容批次</p>
+          <div class="console-row"><span>参考文案</span><strong>10 / 10</strong><i>通过</i></div>
+          <div class="console-row"><span>产品可识别</span><strong>搬家打包袋</strong><i>通过</i></div>
+          <div class="console-row"><span>候选选题</span><strong>2 个</strong><i class="warn">不凑数</i></div>
+          <div class="console-row"><span>确认门</span><strong>2 级</strong><i>受控</i></div>
+          <div class="console-complete"><span>✓</span><div><b>准备就绪</b><small>点击下方演示查看完整流程</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metric-strip" aria-label="核心指标">
+      <div><strong>10</strong><span>篇有效参考文案</span></div>
+      <div><strong>≤ 3</strong><span>个差异化候选选题</span></div>
+      <div><strong>≈ 280</strong><span>字完整正文</span></div>
+      <div><strong>2.5h → 15–30m</strong><span>人工操作目标</span></div>
+    </section>
+
+    <section class="section intro-section">
+      <div class="section-heading">
+        <p class="eyebrow">WHAT IT DOES</p>
+        <h2>不是“自动乱写”，而是一条受控生产线</h2>
+        <p>Agent 负责分析和生成，人负责关键判断。缺少价格、规格、材质时可以继续分析，但这些未经确认的事实绝不会进入正文。</p>
+      </div>
+      <div class="feature-grid">
+        <article><span class="feature-index">01</span><h3>证据分析</h3><p>从参考文案提取用户、场景、痛点、动作和内容结构，每项分析保留参考依据。</p></article>
+        <article><span class="feature-index">02</span><h3>事实隔离</h3><p>产品客观事实与 Agent 推断建议分栏输出，同行资料不能替代当前产品资料。</p></article>
+        <article><span class="feature-index">03</span><h3>两次确认</h3><p>第一次确认分析和选题，第二次确认最终文案；没有确认就不继续、不写飞书。</p></article>
+        <article><span class="feature-index">04</span><h3>完整交付</h3><p>标题、250—300字正文、核心关键词、#话题标签和质量结果一次性输出。</p></article>
+      </div>
+    </section>
+
+    <section class="section demo-section" id="demo">
+      <div class="section-heading split-heading">
+        <div>
+          <p class="eyebrow">INTERACTIVE WALKTHROUGH</p>
+          <h2>像真实运行一样，走一遍完整流程</h2>
+        </div>
+        <p class="demo-disclaimer"><span>演示模式</span> 所有内容均为预置脱敏样例；按钮只切换本地页面状态，不发送任何网络请求。</p>
+      </div>
+
+      <div class="demo-shell">
+        <aside class="demo-steps" aria-label="演示步骤">
+          <ol id="stepList">
+            <li class="active" data-step="0"><b>01</b><span>模拟输入<small>10篇文案＋产品资料</small></span></li>
+            <li data-step="1"><b>02</b><span>自动分析<small>用户、场景与痛点</small></span></li>
+            <li data-step="2"><b>03</b><span>第一轮确认<small>事实＋分析＋选题</small></span></li>
+            <li data-step="3"><b>04</b><span>生成成稿<small>标题、正文与话题</small></span></li>
+            <li data-step="4"><b>05</b><span>质量检查<small>7项门槛</small></span></li>
+            <li data-step="5"><b>06</b><span>第二轮确认<small>满足写入条件</small></span></li>
+          </ol>
+        </aside>
+
+        <div class="demo-workspace">
+          <div class="workspace-top">
+            <div><span class="workspace-dot"></span><strong id="demoTitle">模拟输入已就绪</strong></div>
+            <span id="stepCounter">步骤 1 / 6</span>
+          </div>
+          <div id="demoContent" class="demo-content" aria-live="polite"></div>
+          <div class="demo-controls">
+            <button class="button ghost" id="resetDemo" type="button">重新演示</button>
+            <button class="button primary" id="nextDemo" type="button">开始分析 <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section standards-section" id="standards">
+      <div class="section-heading">
+        <p class="eyebrow">OUTPUT STANDARD</p>
+        <h2>每篇成稿都有明确验收线</h2>
+      </div>
+      <div class="standards-layout">
+        <div class="standard-cards">
+          <article><span>标题</span><strong>14—18字</strong><small>硬性不超过20字</small></article>
+          <article><span>正文</span><strong>250—300字</strong><small>通常约280字，3—4段</small></article>
+          <article><span>完整性</span><strong>4项同批输出</strong><small>标题、正文、关键词、话题</small></article>
+          <article><span>相似度</span><strong>≤ 30%</strong><small>分别对比每篇参考正文</small></article>
+        </div>
+        <div class="quality-panel">
+          <div class="quality-head"><span>最终质量门</span><b>7 / 7</b></div>
+          <ul>
+            <li><span>产品事实</span><i>只用已确认资料</i></li>
+            <li><span>标题长度</span><i>14—18字</i></li>
+            <li><span>正文字数</span><i>250—300字</i></li>
+            <li><span>内容结构</span><i>场景→痛点→动作→结果</i></li>
+            <li><span>话题完整</span><i>包含#话题标签</i></li>
+            <li><span>语言合规</span><i>无虚构体验与夸张承诺</i></li>
+            <li><span>文字相似度</span><i>不超过30%</i></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section boundaries-section" id="boundaries">
+      <div class="section-heading split-heading">
+        <div><p class="eyebrow">CAPABILITY BOUNDARIES</p><h2>它能做什么，也明确不做什么</h2></div>
+        <p>公开页面只展示能力，不开放调用。真正的生产 Agent、飞书权限和业务数据始终留在私有环境。</p>
+      </div>
+      <div class="boundary-grid">
+        <article class="can"><h3><span>✓</span> 可以完成</h3><ul><li>读取、去重10篇参考文案</li><li>分析用户、场景、痛点和内容方向</li><li>提出有依据的候选卖点与选题</li><li>生成完整文案并执行质量检查</li><li>经确认后受控写入飞书</li></ul></article>
+        <article class="cannot"><h3><span>×</span> 不会完成</h3><ul><li>用同行资料冒充当前产品事实</li><li>凭空确认价格、规格、材质或效果</li><li>自动选品、定价或承诺爆款</li><li>未经确认直接写飞书或发布小红书</li><li>向公开访问者开放真实调用</li></ul></article>
+        <article class="human"><h3><span>!</span> 必须人工介入</h3><ul><li>产品无法识别或客观资料冲突</li><li>第一轮分析与选题确认</li><li>第二轮最终内容确认</li><li>事实、合规或相似度无法可靠判断</li><li>飞书权限不足或写入状态不明</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section evidence-section" id="evidence">
+      <div class="section-heading">
+        <p class="eyebrow">REAL RUN EVIDENCE</p>
+        <h2>展示真实过程，也公开尚未完成的部分</h2>
+        <p>以下内容是2026-08-11真实运行记录的脱敏摘录。为保护群聊、账号和业务资料，公开页不上传原始飞书截图。</p>
+      </div>
+      <div class="evidence-grid">
+        <figure>
+          <div class="run-proof proof-success" aria-label="脱敏运行记录：第一轮分析确认阶段已跑通">
+            <div class="proof-head"><span class="proof-status">RUN · 2026-08-11</span><span>飞书会话 · 已脱敏</span></div>
+            <div class="proof-message"><small>AGENT</small><strong>产品事实与内容方向分析完成</strong><p>从参考文案提取场景与痛点，当前产品事实单独标记；保留2个有依据的候选选题。</p></div>
+            <div class="proof-result"><span>第一轮确认</span><b>等待人工确认</b><em>阶段已跑通</em></div>
+          </div>
+          <figcaption><span class="evidence-ok">阶段已跑通</span><h3>第一轮分析与确认</h3><p>Agent保留实际合格的两个候选，没有为了凑足三个降低标准。</p></figcaption>
+        </figure>
+        <figure>
+          <div class="run-proof proof-warning" aria-label="脱敏问题记录：旧版短稿未通过质量检查">
+            <div class="proof-head"><span class="proof-status">ISSUE · 2026-08-11</span><span>质量复检 · 已脱敏</span></div>
+            <div class="proof-message"><small>QUALITY GATE</small><strong>旧版文案未达到交付标准</strong><p>正文过短且缺少完整话题；该结果被保留为问题记录，没有标记为成功成稿。</p></div>
+            <div class="proof-result"><span>修复状态</span><b>已加入长度与话题质量门</b><em>待正式批次复验</em></div>
+          </div>
+          <figcaption><span class="evidence-warn">真实问题记录</span><h3>旧版短稿被识别</h3><p>Agent 1.1已新增标题、正文长度和话题完整性质量门。</p></figcaption>
+        </figure>
+      </div>
+      <div class="validation-row"><div><span>25</span><p><strong>自动化测试全部通过</strong><small>2026-08-11 · 实际 Agent 目录</small></p></div><p>端到端合格成稿、第二轮确认和飞书回读截图仍待下一次正式批次补齐。</p></div>
+    </section>
+
+    <section class="section stack-section">
+      <div class="section-heading"><p class="eyebrow">HOW IT IS BUILT</p><h2>三个工具，各自只做擅长的事</h2></div>
+      <div class="stack-grid">
+        <article><b>01</b><h3>Codex</h3><p>维护岗位卡、工作流、确定性程序、质量门和自动化测试。</p></article>
+        <article><b>02</b><h3>Hermes</h3><p>在对话中读取资料、组织分析、生成文案并等待两轮确认。</p></article>
+        <article><b>03</b><h3>飞书 CLI</h3><p>仅在最终确认、质量通过且权限可用时写入并回读验证。</p></article>
+      </div>
+    </section>
+
+    <section class="section privacy-section">
+      <div class="privacy-card">
+        <div><p class="eyebrow">PUBLIC SHOWCASE · PRIVATE AGENT</p><h2>你看到的是能力，不是权限入口</h2><p>这个网站没有表单、账号体系、服务端、数据库或API请求。访问者只能查看预置脱敏案例，无法上传资料、调用模型或接触飞书。</p></div>
+        <ul><li>无 App ID / Secret / Token</li><li>无 Webhook / Chat ID</li><li>无真实参考文案全文</li><li>无业务文件和个人数据</li></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand"><span class="brand-mark">小</span><span><strong>小红书内容生产员</strong><small>Agent 1.1 · 公开演示站</small></span></div>
+    <p><a href="privacy.html">隐私与安全说明</a><br>演示页面不连接真实 Agent、API 或飞书。最后更新：2026-08-11</p>
+  </footer>
+
+  <dialog id="imageDialog" aria-label="查看大图">
+    <button id="closeDialog" type="button" aria-label="关闭">×</button>
+    <img id="dialogImage" alt="">
+    <p id="dialogCaption"></p>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
